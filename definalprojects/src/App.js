@@ -24,7 +24,7 @@ function Home() {
     <div>
       <h2>Home</h2>
       <p>Welcome to Restaurant Finder! Click the button below to get restaurant recommendations.</p>
-      <button onClick={() => window.location.href = '/recommend'}>Get Recommendations</button>
+      <button onClick={() => window.location.href = '${config.backendUrl}/recommend'}>Get Recommendations</button>
     </div>
   );
 }
