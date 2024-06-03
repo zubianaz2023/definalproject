@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import config from './config';
 function RecommendComponent() {
   const [longitude, setLongitude] = useState('');
   const [latitude, setLatitude] = useState('');
