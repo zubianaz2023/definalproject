@@ -8,7 +8,7 @@ function Restaurant() {
   const restaurantsPerPage = 10;
 
   useEffect(() => {
-    fetch("${config.backendUrl}/clusters")
+    fetch("${config.backendUrl}/")
       .then(res => res.json())
       .then(data => {
         console.log("Data received:", data); // Log the received data
