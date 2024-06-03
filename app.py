@@ -48,7 +48,7 @@ def recommend_restaurants(top, longitude, latitude):
     return cluster_df
 
 
-@app.route('/api/clusters')
+@app.route('/')
 def get_clusters():
     # Add other information to the clusters data
     print("Preparing clusters data...")
@@ -61,7 +61,7 @@ def get_clusters():
     print("Data processing completed.")
     return jsonify({'clusters': clusters_list})
 
-@app.route('/api/recommend')
+@app.route('/recommend')
 def recommend():
     longitude_str = request.args.get('longitude')
     latitude_str = request.args.get('latitude')
