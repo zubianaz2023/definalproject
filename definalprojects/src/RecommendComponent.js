@@ -6,7 +6,7 @@ function RecommendComponent() {
   const [recommendedRestaurants, setRecommendedRestaurants] = useState([]);
 
   const handleRecommendation = () => {
-    fetch(`/api/recommend?longitude=${longitude}&latitude=${latitude}`)
+    fetch(`${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}`)
       .then(response => response.json())
       .then(data => {
         setRecommendedRestaurants(data.recommended_restaurants);
