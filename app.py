@@ -9,6 +9,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 def convert_to_float(value):
     try:
         return float(value)
