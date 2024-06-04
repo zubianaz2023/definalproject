@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch, Link } from 'react-router-dom';
+import { HashRouter, Route, Routes, Link } from 'react-router-dom';
 
 import RecommendComponent from './RecommendComponent';
 import Restaurant from './Restaurant';
