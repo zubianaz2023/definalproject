@@ -8,12 +8,22 @@ function RecommendComponent() {
 
   const handleRecommendation = () => {
     if (longitude && latitude) {
-      fetch(`${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}`)  // Corrected template literal
-        .then(response => response.json())
+      const url = `${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}`;
+      console.log("Fetching URL:", url);  // Debugging line to ensure URL is correct
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
+          console.log("Data received:", data); // Log the received data
           setRecommendedRestaurants(data.recommended_restaurants);
         })
-        .catch(error => console.error('Error fetching recommendation:', error));
+        .catch(error => {
+          console.error('Error fetching recommendation:', error);
+        });
     } else {
       alert("Please enter both latitude and longitude.");
     }
