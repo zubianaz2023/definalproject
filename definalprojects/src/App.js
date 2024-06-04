@@ -9,11 +9,11 @@ function App() {
     <HashRouter>
       <div>
         <h1>Best Restaurants in the Gwangju</h1>
-       
+       <Switch>
           <Route path="/" element={<Restaurant />} />
           <Route path="/recommend" element={<RecommendComponent />} />
           
-       
+     </Switch>
       </div>
     </HashRouter>
   );
