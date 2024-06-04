@@ -8,7 +8,7 @@ function RecommendComponent() {
 
   const handleRecommendation = () => {
     if (longitude && latitude) {
-      const url = `${config.backendUrl}recommend?longitude=${longitude}&latitude=${latitude}`;
+      const url = `${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}`;
       console.log("Fetching URL:", url);  // Debugging line to ensure URL is correct
       fetch(url)
         .then(response => {
