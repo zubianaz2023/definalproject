@@ -10,9 +10,9 @@ function App() {
       <div>
         <h1>Restaurant Finder</h1>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Restaurant />} />
           <Route path="/recommend" element={<RecommendComponent />} />
-          <Route path="/restaurant" element={<Restaurant />} />
+          
         </Routes>
       </div>
     </Router>
