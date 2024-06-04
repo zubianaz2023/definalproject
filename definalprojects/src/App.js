@@ -11,7 +11,7 @@ function App() {
         <h1>Best Restaurants in the Gwangju</h1>
         <Routes>
           <Route path="/" element={<Restaurant />} />
-          <Route path="/recommend" element={<RecommendComponent />} />
+          <Route path="/recommends" element={<RecommendComponent />} />
           
         </Routes>
       </div>
