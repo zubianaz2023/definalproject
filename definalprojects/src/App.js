@@ -8,7 +8,7 @@ function App() {
   return (
     <Router>
       <div>
-        <h1>Restaurant Finder</h1>
+        <h1>Best Restaurants in the Gwangju</h1>
         <Routes>
           <Route path="/" element={<Restaurant />} />
           <Route path="/recommend" element={<RecommendComponent />} />
