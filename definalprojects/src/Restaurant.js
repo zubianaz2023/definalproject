@@ -8,7 +8,7 @@ function Restaurant() {
   const restaurantsPerPage = 10;
 
   useEffect(() => {
-    fetch('${config.backendUrl}/')
+    fetch(`${config.backendUrl}/`)  // Corrected template literal
       .then(res => res.json())
       .then(data => {
         console.log("Data received:", data); // Log the received data
@@ -46,7 +46,7 @@ function Restaurant() {
                 index % 2 === 0 ? (
                   <tr key={index}>
                     <td>
-                      <div className="restaurant" key={index}>
+                      <div className="restaurant">
                         <h3>{restaurant.name}</h3>
                         <img
                           src={restaurant.image}
@@ -63,7 +63,7 @@ function Restaurant() {
                     </td>
                     {currentRestaurants[index + 1] && (
                       <td>
-                        <div className="restaurant" key={index + 1}>
+                        <div className="restaurant">
                           <h3>{currentRestaurants[index + 1].name}</h3>
                           <img
                             src={currentRestaurants[index + 1].image}
