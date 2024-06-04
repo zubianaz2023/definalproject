@@ -19,14 +19,8 @@ function App() {
   );
 }
 
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-      <p>Welcome to Restaurant Finder! Click the button below to get restaurant recommendations.</p>
-      <button onClick={() => window.location.href = '/recommend'}>Get Recommendations</button>
-    </div>
-  );
+ 
+  
 }
 
 export default App;
