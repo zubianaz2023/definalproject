@@ -8,9 +8,8 @@ from flask_cors import CORS
 # Initialize W&B with your API key
 
 
-app = Flask(__name__)
-CORS(app)
-def convert_to_float(value):
+app = Flask(__name__)CORS(app, resources={r"/*": {"origins": "https://triprecommender.onrender.com"}})  
+convert_to_float(value):
     try:
         return float(value)
     except ValueError:
