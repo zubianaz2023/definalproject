@@ -12,12 +12,18 @@ function App() {
         <nav>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/recommend">Recommend</Link></li>
+            <li><Link to="/places">Recommend</Link></li>
+            <li><Link to="/hotels">Recommend</Link></li>
+            <li><Link to="/restaurants">Recommend</Link></li>
           </ul>
         </nav>
         <Routes>
           <Route path="/" element={<Restaurant />} />
+          <Route path="/places" element={<RecommendComponent />} />
+          <Route path="/hotels" element={<RecommendComponent />} />
+          <Route path="/restaurants" element={<RecommendComponent />} />
           <Route path="/recommend" element={<RecommendComponent />} />
+          
         </Routes>
       </div>
     </HashRouter>
