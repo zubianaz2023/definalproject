@@ -21,7 +21,7 @@ function App() {
           <Route path="/" element={<Restaurant />} />
           <Route path="/places" element={<Places />} />
           <Route path="/hotels" element={<Hotels />} />
-          <Route path="/restaurants" element={<Restaurants />} />
+          <Route path="/restaurants" element={<Restaurant />} />
           <Route path="/recommend" element={<RecommendComponent />} />
           
         </Routes>
