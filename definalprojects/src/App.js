@@ -19,9 +19,9 @@ function App() {
         </nav>
         <Routes>
           <Route path="/" element={<Restaurant />} />
-          <Route path="/places" element={<RecommendComponent />} />
-          <Route path="/hotels" element={<RecommendComponent />} />
-          <Route path="/restaurants" element={<RecommendComponent />} />
+          <Route path="/places" element={<Places />} />
+          <Route path="/hotels" element={<Hotels />} />
+          <Route path="/restaurants" element={<Restaurants />} />
           <Route path="/recommend" element={<RecommendComponent />} />
           
         </Routes>
