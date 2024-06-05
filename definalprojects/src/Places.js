@@ -48,7 +48,7 @@ function Places() {
                     <td>
                       <div className="restaurant">
                         <h3>{restaurant.name}</h3>
-                        <Link to={`/recommend/${restaurant.id}`}>
+                        <Link to={`/recommend/${restaurant.id}?longitude=${restaurant.longitude}&latitude=${restaurant.latitude}`}>
                           <img
                             src={restaurant.image}
                             alt={restaurant.name}
@@ -59,7 +59,7 @@ function Places() {
                             }}
                           />
                         </Link>
-                        <p>Ranking Position: {restaurant.Rating}</p>
+                        <p>Rating: {restaurant.Rating}</p>
                         <p>Address: {restaurant.address}</p>
                       </div>
                     </td>
@@ -67,7 +67,7 @@ function Places() {
                       <td>
                         <div className="restaurant">
                           <h3>{currentRestaurants[index + 1].name}</h3>
-                          <Link to={`/recommend/${currentRestaurants[index + 1].id}`}>
+                          <Link to={`/recommend/${currentRestaurants[index + 1].id}?longitude=${currentRestaurants[index + 1].longitude}&latitude=${currentRestaurants[index + 1].latitude}`}>
                             <img
                               src={currentRestaurants[index + 1].image}
                               alt={currentRestaurants[index + 1].name}
