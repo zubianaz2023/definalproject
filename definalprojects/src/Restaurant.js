@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import config from './config';
 import './App.css';
 
@@ -8,14 +9,14 @@ function Restaurant() {
   const restaurantsPerPage = 10;
 
   useEffect(() => {
-    fetch(`${config.backendUrl}/`)  // Corrected template literal
+    fetch(`${config.backendUrl}/`)
       .then(res => res.json())
       .then(data => {
-        console.log("Data received:", data); // Log the received data
+        console.log("Data received:", data);
         setRestaurants(data.clusters);
       })
       .catch(error => {
-        console.error("Error fetching data:", error); // Log any fetch errors
+        console.error("Error fetching data:", error);
       });
   }, []);
 
@@ -38,7 +39,6 @@ function Restaurant() {
   return (
     <div className="App">
       <header className="App-header">
-        
         <div className="restaurants">
           <table>
             <tbody>
@@ -48,15 +48,17 @@ function Restaurant() {
                     <td>
                       <div className="restaurant">
                         <h3>{restaurant.name}</h3>
-                        <img
-                          src={restaurant.image}
-                          alt={restaurant.name}
-                          style={{
-                            width: "200px",
-                            height: "150px",
-                            objectFit: "cover",
-                          }}
-                        />
+                        <Link to={`/recommend/${restaurant.id}`}>
+                          <img
+                            src={restaurant.image}
+                            alt={restaurant.name}
+                            style={{
+                              width: "200px",
+                              height: "150px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Link>
                         <p>Ranking Position: {restaurant.rankingPosition}</p>
                         <p>Address: {restaurant.address}</p>
                       </div>
@@ -65,15 +67,17 @@ function Restaurant() {
                       <td>
                         <div className="restaurant">
                           <h3>{currentRestaurants[index + 1].name}</h3>
-                          <img
-                            src={currentRestaurants[index + 1].image}
-                            alt={currentRestaurants[index + 1].name}
-                            style={{
-                              width: "200px",
-                              height: "150px",
-                              objectFit: "cover",
-                            }}
-                          />
+                          <Link to={`/recommend/${currentRestaurants[index + 1].id}`}>
+                            <img
+                              src={currentRestaurants[index + 1].image}
+                              alt={currentRestaurants[index + 1].name}
+                              style={{
+                                width: "200px",
+                                height: "150px",
+                                objectFit: "cover",
+                              }}
+                            />
+                          </Link>
                           <p>Ranking Position: {currentRestaurants[index + 1].rankingPosition}</p>
                           <p>Address: {currentRestaurants[index + 1].address}</p>
                         </div>
