@@ -48,7 +48,7 @@ function Places() {
                     <td>
                       <div className="restaurant">
                         <h3>{restaurant.name}</h3>
-                        <Link to={`/recommend/${restaurant.id}?longitude=${restaurant.longitude}&latitude=${restaurant.latitude}`}>
+                        <Link to={`/recommend?longitude=${restaurant.longitude}&latitude=${restaurant.latitude}`}>
                           <img
                             src={restaurant.image}
                             alt={restaurant.name}
@@ -63,39 +63,3 @@ function Places() {
                         <p>Address: {restaurant.address}</p>
                       </div>
                     </td>
-                    {currentRestaurants[index + 1] && (
-                      <td>
-                        <div className="restaurant">
-                          <h3>{currentRestaurants[index + 1].name}</h3>
-                          <Link to={`/recommend/${currentRestaurants[index + 1].id}?longitude=${currentRestaurants[index + 1].longitude}&latitude=${currentRestaurants[index + 1].latitude}`}>
-                            <img
-                              src={currentRestaurants[index + 1].image}
-                              alt={currentRestaurants[index + 1].name}
-                              style={{
-                                width: "200px",
-                                height: "150px",
-                                objectFit: "cover",
-                              }}
-                            />
-                          </Link>
-                          <p>Rating: {currentRestaurants[index + 1].Rating}</p>
-                          <p>Address: {currentRestaurants[index + 1].address}</p>
-                        </div>
-                      </td>
-                    )}
-                  </tr>
-                ) : null
-              ))}
-            </tbody>
-          </table>
-          <div className="pagination">
-            <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
-            <button onClick={nextPage} disabled={currentPage === Math.ceil(restaurants.length / restaurantsPerPage)}>Next</button>
-          </div>
-        </div>
-      </header>
-    </div>
-  );
-}
-
-export default Places;
