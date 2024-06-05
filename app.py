@@ -19,15 +19,15 @@ def convert_to_float(value):
 
 # Load data from CSV
 print("Loading data from CSV...")
-df = pd.read_csv("dataset.csv")
+df = pd.read_csv("Places.csv")
 
 # Filter out rows with missing longitude or latitude values
 print("Filtering out rows with missing coordinates...")
-filtered_df = df.dropna(subset=['longitude', 'latitude','rankingPosition','image'])
+filtered_df = df.dropna(subset=['longitude', 'latitude','Rating','image'])
 
 # Sort by rankingPosition
 print("Sorting by ranking position...")
-top = filtered_df.sort_values(by=['rankingPosition'], ascending=True)
+top = filtered_df.sort_values(by=['Rating'], ascending=True)
 
 # Extract coordinates
 print("Extracting coordinates...")
@@ -45,7 +45,7 @@ print(top)
 def recommend_restaurants(top, longitude, latitude):
     cluster = kmeans.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     print("Cluster:", cluster)
-    cluster_df = top[top['cluster'] == cluster].iloc[:5, [12,7,9,18,6]]
+    cluster_df = top[top['cluster'] == cluster].iloc[:5, [0,3,6,7,8]]
     return cluster_df
 
 
