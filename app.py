@@ -53,7 +53,7 @@ def recommend_restaurants(top, longitude, latitude):
 def get_clusters():
     # Add other information to the clusters data
     print("Preparing clusters data...")
-    clusters_data = top[['name', 'rankingPosition', 'address', 'image']]
+    clusters_data = top[['Name', 'Rating', 'address', 'image']]
 
     # Convert clusters data to list of dictionaries
     print("Converting clusters data to list of dictionaries...")
