@@ -3,6 +3,9 @@ import { HashRouter, Route, Routes, Link } from 'react-router-dom';
 
 import RecommendComponent from './RecommendComponent';
 import Restaurant from './Restaurant';
+import Places from './Places';
+import Hotels from './Hotels';
+import ShoppingMalls from './ShoppingMalls';
 
 function App() {
   return (
