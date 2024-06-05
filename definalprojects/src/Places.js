@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import config from './config';
 import './App.css';
 
-function Restaurant() {
+function Places() {
   const [restaurants, setRestaurants] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const restaurantsPerPage = 10;
@@ -98,4 +98,4 @@ function Restaurant() {
   );
 }
 
-export default Restaurant;
+export default Places;
