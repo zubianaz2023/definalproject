@@ -12,9 +12,10 @@ function App() {
         <nav>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/places">Recommend</Link></li>
-            <li><Link to="/hotels">Recommend</Link></li>
-            <li><Link to="/restaurants">Recommend</Link></li>
+            <li><Link to="/places">Places</Link></li>
+            <li><Link to="/hotels">Hotels</Link></li>
+            <li><Link to="/restaurants">Restaurants</Link></li>
+            <li><Link to="/shoppingmalls">Shopping Malls</Link></li>
           </ul>
         </nav>
         <Routes>
@@ -22,6 +23,7 @@ function App() {
           <Route path="/places" element={<Places />} />
           <Route path="/hotels" element={<Hotels />} />
           <Route path="/restaurants" element={<Restaurant />} />
+          <Route path="/shoppingmalls" element={<ShoppingMalls />} />
           <Route path="/recommend" element={<RecommendComponent />} />
           
         </Routes>
