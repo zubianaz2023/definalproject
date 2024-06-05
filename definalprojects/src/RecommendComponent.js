@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-
+import Places from './Places';
 function RecommendComponent() {
   const query = new URLSearchParams(useLocation().search);
   const longitude = query.get('longitude');
