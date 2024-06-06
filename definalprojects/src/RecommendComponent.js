@@ -40,7 +40,7 @@ function RecommendComponent() {
           console.error('Error fetching data:', error);
         });
     }
-  }, [longitude, latitude, topResData]);
+  }, [longitude, latitude]);
 
   return (
     <div>
