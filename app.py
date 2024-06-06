@@ -38,7 +38,7 @@ def recommend_restaurants(top_res, longitude, latitude):
 
 @app.route('/')
 def get_clusters():
-    clusters_data = top[['Name', 'Rating', 'address', 'image', 'longitude', 'latitude]]
+    clusters_data = top[['Name', 'Rating', 'address', 'image', 'longitude', 'latitude']]
     clusters_list = clusters_data.to_dict(orient='records')
     return jsonify({'clusters': clusters_list})
 
