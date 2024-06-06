@@ -44,7 +44,8 @@ def get_clusters():
 
 @app.route('/get_top_res')
 def get_top_res():
-    top_res_data = top_res.to_dict(orient='records')
+    top_res_datas=top_res[['name','address', 'image', 'phone', 'longitude','latitude']]
+    top_res_data = top_res_datas.to_dict(orient='records')
     return jsonify({'top_res': top_res_data})
 
 @app.route('/recommend')
