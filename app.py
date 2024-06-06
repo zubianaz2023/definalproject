@@ -37,7 +37,7 @@ coords = top_res[['longitude', 'latitude']]
 print("Fitting KMeans model...")
 kmeans = KMeans(n_clusters=3, init='k-means++')
 kmeans.fit(coords)
-Add cluster labels to the DataFrame
+
 top_res['cluster'] = kmeans.labels_
 print(top_res)
 
