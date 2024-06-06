@@ -19,7 +19,7 @@ df = pd.read_csv("Places.csv")
 print("Sort by ranking position...")
 top = df.sort_values(by=['Rating'], ascending=True)
 # Load data from CSV
-df_res = pd.read_csv("dataset.csv")
+df_res = pd.read_csv("Restaurants.csv")
 filtered_df = df_res.dropna(subset=['longitude', 'latitude', 'rankingPosition', 'image'])
 top_res = filtered_df.sort_values(by=['rankingPosition'], ascending=True)
 
@@ -33,7 +33,7 @@ top_res['cluster'] = kmeans.labels_
 
 def recommend_restaurants(top_res, longitude, latitude):
     cluster = kmeans.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:5, ['name', 'address', 'image', 'rankingPosition']]
+    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:5, [0,1,4,8]]
     return cluster_df
 
 @app.route('/')
