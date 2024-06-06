@@ -1,69 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import config from './config'; // Ensure this imports the correct config file
+from flask import Flask, jsonify, request
+import pandas as pd
+from sklearn.cluster import KMeans
+import numpy as np
+from flask_cors import CORS
 
-function RecommendComponent() {
-  const query = new URLSearchParams(useLocation().search);
-  const longitude = query.get('longitude');
-  const latitude = query.get('latitude');
-  const [recommendedRestaurants, setRecommendedRestaurants] = useState([]);
-  const [topResData, setTopResData] = useState([]);
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "https://triprecommender.onrender.com"}})
 
-  useEffect(() => {
-    // Fetch top_res data
-    fetch(`${config.backendUrl}/get_top_res`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.top_res) {
-          setTopResData(data.top_res);
-        } else {
-          console.error('Error fetching top_res data:', data.error);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+def convert_to_float(value):
+    try:
+        return float(value)
+    except ValueError:
+        return None
 
-  useEffect(() => {
-    if (longitude && latitude) {
-      fetch(`${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.recommended_restaurants) {
-            setRecommendedRestaurants(data.recommended_restaurants);
-          } else {
-            console.error('Error fetching recommended restaurants:', data.error);
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    }
-  }, [longitude, latitude]);
+# Load data from CSV
+df_res = pd.read_csv("dataset.csv")
+filtered_df = df_res.dropna(subset=['longitude', 'latitude', 'rankingPosition', 'image'])
+top_res = filtered_df.sort_values(by=['rankingPosition'], ascending=True)
 
-  return (
-    <div>
-      <h2>Recommend Component</h2>
-      <p>Longitude: {longitude}</p>
-      <p>Latitude: {latitude}</p>
-      <h3>Recommended Restaurants</h3>
-      {recommendedRestaurants.length > 0 ? (
-        <ul>
-          {recommendedRestaurants.map((restaurant, index) => (
-            <li key={index}>
-              <h4>{restaurant.name}</h4>
-              <img src={restaurant.image} alt={restaurant.name} style={{ width: '200px', height: '150px', objectFit: 'cover' }} />
-              <p>Ranking Position: {restaurant.rankingPosition}</p>
-              <p>Address: {restaurant.address}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No recommended restaurants found.</p>
-      )}
-    </div>
-  );
-}
+# Extract coordinates
+coords = top_res[['longitude', 'latitude']]
 
-export default RecommendComponent;
+# Fit KMeans with k=3
+kmeans = KMeans(n_clusters=3, init='k-means++')
+kmeans.fit(coords)
+top_res['cluster'] = kmeans.labels_
+
+def recommend_restaurants(top_res, longitude, latitude):
+    cluster = kmeans.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:5, ['name', 'address', 'image', 'rankingPosition']]
+    return cluster_df
+
+@app.route('/')
+def get_clusters():
+    clusters_data = top[['Name', 'Rating', 'address', 'image', 'longitude', 'latitude']]
+    clusters_list = clusters_data.to_dict(orient='records')
+    return jsonify({'clusters': clusters_list})
+
+@app.route('/get_top_res')
+def get_top_res():
+    top_res_data = top_res.to_dict(orient='records')
+    return jsonify({'top_res': top_res_data})
+
+@app.route('/recommend')
+def recommend():
+    longitude_str = request.args.get('longitude')
+    latitude_str = request.args.get('latitude')
+
+    longitude = convert_to_float(longitude_str)
+    latitude = convert_to_float(latitude_str)
+
+    if longitude is not None and latitude is not None:
+        recommended_restaurants = recommend_restaurants(top_res, longitude, latitude)
+        return jsonify({'recommended_restaurants': recommended_restaurants.to_dict(orient='records')})
+    else:
+        return jsonify({'error': 'Invalid longitude or latitude value.'}), 400
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return jsonify({'error': 'Not Found'}), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return jsonify({'error': 'Internal Server Error'}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
