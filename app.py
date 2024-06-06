@@ -12,7 +12,12 @@ def convert_to_float(value):
         return float(value)
     except ValueError:
         return None
-
+        
+# Load data from CSV
+print("Loading data from CSV...")
+df = pd.read_csv("Places.csv")
+print("Sort by ranking position...")
+top = df.sort_values(by=['Rating'], ascending=True)
 # Load data from CSV
 df_res = pd.read_csv("dataset.csv")
 filtered_df = df_res.dropna(subset=['longitude', 'latitude', 'rankingPosition', 'image'])
