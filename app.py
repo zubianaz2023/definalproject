@@ -18,33 +18,33 @@ def convert_to_float(value):
 
 
 # Load data from CSV
-print("Loading data from CSV...")
+#print("Loading data from CSV...")
 df = pd.read_csv("Places.csv")
-print("Sort by ranking position...")
+#print("Sort by ranking position...")
 top = df.sort_values(by=['Rating'], ascending=True)
 
 
 # Load data from CSV
-print("Loading data from CSV...")
+#print("Loading data from CSV...")
 df_res = pd.read_csv("dataset.csv")
 filtered_df = df_res.dropna(subset=['longitude', 'latitude','rankingPosition','image'])
-print("Sort by ranking position...")
+#print("Sort by ranking position...")
 top_res = filtered_df.sort_values(by=['rankingPosition'], ascending=True)
 #Extract coordinates
-print("Extracting coordinates...")
+#print("Extracting coordinates...")
 coords = top_res[['longitude', 'latitude']]
 # Fit KMeans with k=3
-print("Fitting KMeans model...")
+#print("Fitting KMeans model...")
 kmeans = KMeans(n_clusters=3, init='k-means++')
 kmeans.fit(coords)
 
 top_res['cluster'] = kmeans.labels_
-print(top_res)
+#print(top_res)
 
 
 def recommend_restaurants(top_res, longitude, latitude):
     cluster = kmeans.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    print("Cluster:", cluster)
+   #print("Cluster:", cluster)
     cluster_df = top_res[top_res['cluster'] == cluster].iloc[:5, [0,3,8,14]]
     return cluster_df
 
@@ -52,14 +52,14 @@ def recommend_restaurants(top_res, longitude, latitude):
 @app.route('/')
 def get_clusters():
     # Add other information to the clusters data
-    print("Preparing clusters data...")
+    #print("Preparing clusters data...")
     clusters_data = top[['Name', 'Rating', 'address', 'image','longitude','latitude']]
 
     # Convert clusters data to list of dictionaries
-    print("Converting clusters data to list of dictionaries...")
+    #print("Converting clusters data to list of dictionaries...")
     clusters_list = clusters_data.to_dict(orient='records')
 
-    print("Data processing completed.")
+    #print("Data processing completed.")
     return jsonify({'clusters': clusters_list})
 
 @app.route('/recommend')
@@ -69,9 +69,10 @@ def recommend():
     
 
     # Convert longitude and latitude strings to floats
-    longitude = convert_to_float(longitude_str)
-    latitude = convert_to_float(latitude_str)
+    #longitude = convert_to_float(longitude_str)
+    #latitude = convert_to_float(latitude_str)
     data = top_res[['name', 'address','image','phone']]
+    print(data)
     if longitude is not None and latitude is not None:
         recommended_restaurants = recommend_restaurants(top_res, longitude, latitude)
         return jsonify({'recommended_restaurants': recommended_restaurants.to_dict(orient='records')
