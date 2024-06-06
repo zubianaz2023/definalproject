@@ -71,6 +71,7 @@ def recommend():
     # Convert longitude and latitude strings to floats
     #longitude = convert_to_float(longitude_str)
     #latitude = convert_to_float(latitude_str)
+    print("i think this is not working")
     data = top_res[['name', 'address','image','phone']]
     print(data)
     if longitude is not None and latitude is not None:
