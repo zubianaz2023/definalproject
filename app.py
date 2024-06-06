@@ -20,7 +20,7 @@ print("Sort by ranking position...")
 top = df.sort_values(by=['Rating'], ascending=True)
 # Load data from CSV
 df_res = pd.read_csv("Restaurants.csv")
-filtered_df = df_res.dropna(subset=['longitude', 'latitude', 'rankingPosition', 'image'])
+filtered_df = df_res.dropna(subset=['rankingPosition', 'image'])
 top_res = filtered_df.sort_values(by=['rankingPosition'], ascending=True)
 
 # Extract coordinates
@@ -38,13 +38,13 @@ def recommend_restaurants(top_res, longitude, latitude):
 
 @app.route('/')
 def get_clusters():
-    clusters_data = top[['Name', 'Rating', 'address', 'image', 'longitude', 'latitude']]
+    clusters_data = top[['Name', 'Rating', 'address', 'image', 'longitude', 'latitude]]
     clusters_list = clusters_data.to_dict(orient='records')
     return jsonify({'clusters': clusters_list})
 
 @app.route('/get_top_res')
 def get_top_res():
-    top_res_datas=top_res[['name','address', 'image', 'phone', 'longitude','latitude']]
+    top_res_datas=top_res[['name','address', 'image', 'phone']]
     top_res_data = top_res_datas.to_dict(orient='records')
     return jsonify({'top_res': top_res_data})
 
