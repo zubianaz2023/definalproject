@@ -9,7 +9,7 @@ function RecommendComponent() {
 
   useEffect(() => {
     if (longitude && latitude) {
-      fetch(`http://localhost:5000/recommend?longitude=${longitude}&latitude=${latitude}`)
+      fetch(`config.backendUrl/recommend?longitude=${longitude}&latitude=${latitude}`)
         .then(response => response.json())
         .then(data => {
           if (data.recommended_restaurants) {
