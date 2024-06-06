@@ -45,7 +45,7 @@ print(top_res)
 def recommend_restaurants(top_res, longitude, latitude):
     cluster = kmeans.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     print("Cluster:", cluster)
-    cluster_df = top_[top_res['cluster'] == cluster].iloc[:5, [0,3,6,7,8]]
+    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:5, [0,3,8,14]]
     return cluster_df
 
 
@@ -66,12 +66,12 @@ def get_clusters():
 def recommend():
     
     
-    print(top)
+    
 
     # Convert longitude and latitude strings to floats
     longitude = convert_to_float(longitude_str)
     latitude = convert_to_float(latitude_str)
-
+    data = top_res[['name', 'address','image','phone']]
     if longitude is not None and latitude is not None:
         recommended_restaurants = recommend_restaurants(top_res, longitude, latitude)
         return jsonify({'recommended_restaurants': recommended_restaurants.to_dict(orient='records')
