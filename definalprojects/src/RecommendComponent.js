@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import config from './config'; // Ensure this imports the correct config file
+import './RecommendComponent.css'; // Import the CSS file for styling
 
 function RecommendComponent() {
   const query = new URLSearchParams(useLocation().search);
@@ -32,7 +33,7 @@ function RecommendComponent() {
 
   useEffect(() => {
     if (longitude && latitude) {
-      fetch(`${config.backendUrl}recommend?longitude=${longitude}&latitude=${latitude}`)
+      fetch(`${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -59,16 +60,26 @@ function RecommendComponent() {
       <p>Latitude: {latitude}</p>
       <h3>Recommended Restaurants</h3>
       {recommendedRestaurants.length > 0 ? (
-        <ul>
-          {recommendedRestaurants.map((restaurant, index) => (
-            <li key={index}>
-              <h4>{restaurant.name}</h4>
-              <img src={restaurant.image} alt={restaurant.name} style={{ width: '200px', height: '150px', objectFit: 'cover' }} />
-              <p>Ranking Position: {restaurant.rankingPosition}</p>
-              <p>Address: {restaurant.address}</p>
-            </li>
-          ))}
-        </ul>
+        <table className="recommend-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Ranking Position</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recommendedRestaurants.map((restaurant, index) => (
+              <tr key={index}>
+                <td>{restaurant.name}</td>
+                <td><img src={restaurant.image} alt={restaurant.name} className="restaurant-image" /></td>
+                <td>{restaurant.rankingPosition}</td>
+                <td>{restaurant.address}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       ) : (
         <p>No recommended restaurants found.</p>
       )}
