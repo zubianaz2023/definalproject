@@ -26,7 +26,7 @@ top_res = filtered_df.sort_values(by=['rankingPosition'], ascending=True)
 
 # Load shopping malls data
 df_malls = pd.read_csv("ShoppingMalls.csv")
-filtered_df_malls = df_malls.dropna(subset=['Ranking', 'image', 'longitude', 'latitude','phone'])
+filtered_df_malls = df_malls.dropna(subset=['Ranking', 'image', 'longitude', 'latitude','phone','website'])
 top_malls = filtered_df_malls.sort_values(by=['Ranking'], ascending=True)
 
 # Extract coordinates for KMeans
