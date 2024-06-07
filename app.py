@@ -20,7 +20,7 @@ print("Sort by ranking position...")
 top = df.sort_values(by=['Rating'], ascending=True)
 # Load data from CSV
 df_res = pd.read_csv("Restaurants.csv")
-filtered_df = df_res.dropna(subset=['rankingPosition', 'image'])
+filtered_df = df_res.dropna(subset=['rankingPosition', 'image','longitude','latitude'])
 top_res = filtered_df.sort_values(by=['rankingPosition'], ascending=True)
 
 # Extract coordinates
