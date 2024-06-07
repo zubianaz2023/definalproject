@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import config from './config'; // Ensure this imports the correct config file
- 
+import './RecommendComponent.css'; // Import the CSS file for styling
 
 function RecommendComponent() {
   const query = new URLSearchParams(useLocation().search);
@@ -9,8 +9,10 @@ function RecommendComponent() {
   const latitude = query.get('latitude');
   const [recommendedRestaurants, setRecommendedRestaurants] = useState([]);
   const [recommendedMalls, setRecommendedMalls] = useState([]);
+  const [recommendedHotels, setRecommendedHotels] = useState([]);
   const [topResData, setTopResData] = useState([]);
   const [topMallsData, setTopMallsData] = useState([]);
+  const [topHotelsData, setTopHotelsData] = useState([]);
 
   useEffect(() => {
     // Fetch top_res data
@@ -47,6 +49,27 @@ function RecommendComponent() {
           setTopMallsData(data.top_malls);
         } else {
           console.error('Error fetching top_malls data:', data.error);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    // Fetch top_hotels data
+    fetch(`${config.backendUrl}/get_top_hotels`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.top_hotels) {
+          setTopHotelsData(data.top_hotels);
+        } else {
+          console.error('Error fetching top_hotels data:', data.error);
         }
       })
       .catch(error => {
@@ -93,6 +116,25 @@ function RecommendComponent() {
         .catch(error => {
           console.error('Error fetching data:', error);
         });
+
+      // Fetch recommended hotels
+      fetch(`${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}&category=hotels`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.recommended_hotels) {
+            setRecommendedHotels(data.recommended_hotels);
+          } else {
+            console.error('Error fetching recommended hotels:', data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
     }
   }, [longitude, latitude]);
 
@@ -101,7 +143,7 @@ function RecommendComponent() {
       <h2>Recommend Component</h2>
       <p>Longitude: {longitude}</p>
       <p>Latitude: {latitude}</p>
-      
+
       <h3>Recommended Restaurants</h3>
       {recommendedRestaurants.length > 0 ? (
         <table className="recommend-table">
@@ -144,7 +186,7 @@ function RecommendComponent() {
               <tr key={index}>
                 <td>{mall.name}</td>
                 <td><img src={mall.image} alt={mall.name} className="mall-image" /></td>
-                <td>{mall.Ranking}</td>
+                <td>{mall.rankingPosition}</td>
                 <td>{mall.address}</td>
               </tr>
             ))}
@@ -152,6 +194,32 @@ function RecommendComponent() {
         </table>
       ) : (
         <p>No recommended shopping malls found.</p>
+      )}
+
+      <h3>Recommended Hotels</h3>
+      {recommendedHotels.length > 0 ? (
+        <table className="recommend-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Ranking Position</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recommendedHotels.map((hotel, index) => (
+              <tr key={index}>
+                <td>{hotel.name}</td>
+                
+                <td>{hotel.Ranking}</td>
+                <td>{hotel.address}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No recommended hotels found.</p>
       )}
     </div>
   );
