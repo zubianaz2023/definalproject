@@ -21,19 +21,25 @@ top = df.sort_values(by=['Rating'], ascending=True)
 
 # Load restaurant data
 df_res = pd.read_csv("Restaurants.csv")
-filtered_df = df_res.dropna(subset=['rankingPosition', 'image','longitude','latitude'])
-top_res = filtered_df.sort_values(by=['rankingPosition'], ascending=True)
+filtered_df_res = df_res.dropna(subset=['rankingPosition', 'image','longitude','latitude'])
+top_res = filtered_df_res.sort_values(by=['rankingPosition'], ascending=True)
 
 # Load shopping malls data
 df_malls = pd.read_csv("ShoppingMalls.csv")
-filtered_df_malls = df_malls.dropna(subset=['Ranking', 'image', 'longitude', 'latitude','phone','website'])
-top_malls = filtered_df_malls.sort_values(by=['Ranking'], ascending=True)
+filtered_df_malls = df_malls.dropna(subset=['rankingPosition', 'image', 'longitude', 'latitude'])
+top_malls = filtered_df_malls.sort_values(by=['rankingPosition'], ascending=True)
+
+# Load hotels data
+df_hotels = pd.read_csv("Hotels.csv")
+filtered_df_hotels = df_hotels.dropna(subset=['rankingPosition', 'image', 'longitude', 'latitude'])
+top_hotels = filtered_df_hotels.sort_values(by=['rankingPosition'], ascending=True)
 
 # Extract coordinates for KMeans
 coords_res = top_res[['longitude', 'latitude']]
 coords_malls = top_malls[['longitude', 'latitude']]
+coords_hotels = top_hotels[['longitude', 'latitude']]
 
-# Fit KMeans with k=3 for both datasets
+# Fit KMeans with k=3 for all datasets
 kmeans_res = KMeans(n_clusters=3, init='k-means++')
 kmeans_res.fit(coords_res)
 top_res['cluster'] = kmeans_res.labels_
@@ -41,6 +47,10 @@ top_res['cluster'] = kmeans_res.labels_
 kmeans_malls = KMeans(n_clusters=3, init='k-means++')
 kmeans_malls.fit(coords_malls)
 top_malls['cluster'] = kmeans_malls.labels_
+
+kmeans_hotels = KMeans(n_clusters=3, init='k-means++')
+kmeans_hotels.fit(coords_hotels)
+top_hotels['cluster'] = kmeans_hotels.labels_
 
 def recommend_restaurants(top_res, longitude, latitude):
     cluster = kmeans_res.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
@@ -50,6 +60,11 @@ def recommend_restaurants(top_res, longitude, latitude):
 def recommend_malls(top_malls, longitude, latitude):
     cluster = kmeans_malls.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     cluster_df = top_malls[top_malls['cluster'] == cluster].iloc[:5, [0, 1, 4, 8]]
+    return cluster_df
+
+def recommend_hotels(top_hotels, longitude, latitude):
+    cluster = kmeans_hotels.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 4, 8]]
     return cluster_df
 
 @app.route('/')
@@ -68,6 +83,11 @@ def get_top_malls():
     top_malls_data = top_malls[['name', 'address', 'image', 'phone']].to_dict(orient='records')
     return jsonify({'top_malls': top_malls_data})
 
+@app.route('/get_top_hotels')
+def get_top_hotels():
+    top_hotels_data = top_hotels[['name', 'address']].to_dict(orient='records')
+    return jsonify({'top_hotels': top_hotels_data})
+
 @app.route('/recommend')
 def recommend():
     longitude_str = request.args.get('longitude')
@@ -81,6 +101,9 @@ def recommend():
         if category == 'malls':
             recommended_malls = recommend_malls(top_malls, longitude, latitude)
             return jsonify({'recommended_malls': recommended_malls.to_dict(orient='records')})
+        elif category == 'hotels':
+            recommended_hotels = recommend_hotels(top_hotels, longitude, latitude)
+            return jsonify({'recommended_hotels': recommended_hotels.to_dict(orient='records')})
         else:
             recommended_restaurants = recommend_restaurants(top_res, longitude, latitude)
             return jsonify({'recommended_restaurants': recommended_restaurants.to_dict(orient='records')})
