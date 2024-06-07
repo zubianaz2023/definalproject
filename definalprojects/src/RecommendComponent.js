@@ -73,7 +73,15 @@ function RecommendComponent() {
             {recommendedRestaurants.map((restaurant, index) => (
               <tr key={index}>
                 <td>{restaurant.name}</td>
-                <td><img src={restaurant.image} alt={restaurant.name} className="restaurant-image" /></td>
+                <td><<img
+                            src={restaurant.image}
+                            alt={restaurant.name}
+                            style={{
+                              width: "200px",
+                              height: "150px",
+                              objectFit: "cover",
+                            }}
+                          /></td>
                 <td>{restaurant.rankingPosition}</td>
                 <td>{restaurant.address}</td>
               </tr>
