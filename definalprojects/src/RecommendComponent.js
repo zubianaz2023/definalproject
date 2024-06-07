@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import config from './config'; // Ensure this imports the correct config file
-import './RecommendComponent.css'; // Import the CSS file for styling
+
 
 function RecommendComponent() {
   const query = new URLSearchParams(useLocation().search);
