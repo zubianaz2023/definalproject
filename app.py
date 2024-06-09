@@ -71,28 +71,28 @@ def recommend_hotels(top_hotels , longitude, latitude):
     cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 2,6,7]]
     return cluster_df
 
-@app.route('/')
+@app.route('/places')
 def get_clusters():
     clusters_data = top[['Name', 'Rating', 'address', 'image', 'longitude', 'latitude']]
     clusters_list = clusters_data.to_dict(orient='records')
     return jsonify({'clusters': clusters_list})
 
-@app.route('/get_top_res')
+@app.route('/places/get_top_res')
 def get_top_res():
     top_res_data = top_res[['name', 'address', 'image', 'phone']].to_dict(orient='records')
     return jsonify({'top_res': top_res_data})
 
-@app.route('/get_top_malls')
+@app.route('/places/get_top_malls')
 def get_top_malls():
     top_malls_data = top_malls[['name', 'address', 'image', 'phone']].to_dict(orient='records')
     return jsonify({'top_malls': top_malls_data})
 
-@app.route('/get_top_hotels')
+@app.route('/places/get_top_hotels')
 def get_top_hotels():
     top_hotels_data = top_hotels[['name', 'image','phone']].to_dict(orient='records')
     return jsonify({'top_hotels': top_hotels_data})
 
-@app.route('/recommend')
+@app.route('/places/recommend')
 def recommend():
     longitude_str = request.args.get('longitude')
     latitude_str = request.args.get('latitude')
