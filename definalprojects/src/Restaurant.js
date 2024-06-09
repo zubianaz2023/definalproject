@@ -97,3 +97,4 @@ function Restaurant() {
     </div>
   );
 }
+export default Restaurant;
