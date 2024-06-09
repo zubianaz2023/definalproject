@@ -37,7 +37,7 @@ filtered_df_hotels = df_hotels.dropna(subset=['image', 'longitude', 'latitude'])
 # Extract coordinates for KMeans
 coords_res = top_res[['longitude', 'latitude']]
 coords_malls = top_malls[['longitude', 'latitude']]
-coords_hotels = top_hotels[['longitude', 'latitude']]
+coords_hotels = filtered_df_hotels[['longitude', 'latitude']]
 
 # Fit KMeans with k=3 for all datasets
 kmeans_res = KMeans(n_clusters=3, init='k-means++')
@@ -50,7 +50,7 @@ top_malls['cluster'] = kmeans_malls.labels_
 
 kmeans_hotels = KMeans(n_clusters=3, init='k-means++')
 kmeans_hotels.fit(coords_hotels)
-top_hotels['cluster'] = kmeans_hotels.labels_
+filtered_df_hotels['cluster'] = kmeans_hotels.labels_
 
 def recommend_restaurants(top_res, longitude, latitude):
     cluster = kmeans_res.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
@@ -62,7 +62,7 @@ def recommend_malls(top_malls, longitude, latitude):
     cluster_df = top_malls[top_malls['cluster'] == cluster].iloc[:5, [0, 1, 4, 8]]
     return cluster_df
 
-def recommend_hotels(top_hotels, longitude, latitude):
+def recommend_hotels(filtered_df_hotels, longitude, latitude):
     cluster = kmeans_hotels.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 2,7,8]]
     return cluster_df
