@@ -144,30 +144,44 @@ function RecommendComponent() {
     <div>
      
 
+<h3>Recommended Restaurants</h3>
 {recommendedRestaurants.length > 0 ? (
-  <div className="recommend-container">
-    {recommendedRestaurants.map((restaurant, index) => (
-      <div className="recommend-row" key={index}>
-        <div className="recommend-item">
-          <strong>Name:</strong> {restaurant.name}
-        </div>
-        <div className="recommend-item">
-          <img
-            src={restaurant.image}
-            alt={restaurant.name}
-            style={{
-              width: "200px",
-              height: "150px",
-              objectFit: "cover",
-            }}
-          />
-        </div>
-        <div className="recommend-item">
-          <strong>Address:</strong> {restaurant.address}
-        </div>
-      </div>
-    ))}
-  </div>
+  <table className="recommend-table">
+    <thead>
+      <tr>
+        {recommendedRestaurants.slice(0, 5).map((restaurant, index) => (
+          <th key={index}>Restaurant {index + 1}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {recommendedRestaurants.slice(0, 5).map((restaurant, index) => (
+          <td key={index}>
+            <div className="recommend-item">
+              <div>
+                <strong>Name:</strong> {restaurant.name}
+              </div>
+              <div>
+                <img
+                  src={restaurant.image}
+                  alt={restaurant.name}
+                  style={{
+                    width: "200px",
+                    height: "150px",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+              <div>
+                <strong>Address:</strong> {restaurant.address}
+              </div>
+            </div>
+          </td>
+        ))}
+      </tr>
+    </tbody>
+  </table>
 ) : (
   <p>No Restaurants found.</p>
 )}
