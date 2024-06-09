@@ -64,7 +64,7 @@ def recommend_malls(top_malls, longitude, latitude):
 
 def recommend_hotels(top_hotels, longitude, latitude):
     cluster = kmeans_hotels.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 4, 8]]
+    cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 2,7,8]]
     return cluster_df
 
 @app.route('/')
