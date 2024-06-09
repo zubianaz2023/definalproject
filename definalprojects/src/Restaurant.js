@@ -9,7 +9,7 @@ function Restaurant() {
   const restaurantsPerPage = 10;
 
   useEffect(() => {
-    fetch(`${config.backendUrl}/`)
+    fetch(`${config.backendUrl}/restaurants`)
       .then(res => res.json())
       .then(data => {
         console.log("Data received:", data);
@@ -48,7 +48,7 @@ function Restaurant() {
                     <td>
                       <div className="restaurant">
                         <h3>{restaurant.name}</h3>
-                        <Link to={`/recommend/${restaurant.id}`}>
+                        <Link to={`/restaurants/recommend?longitude=${restaurant.longitude}&latitude=${restaurant.latitude}`}>
                           <img
                             src={restaurant.image}
                             alt={restaurant.name}
@@ -59,7 +59,7 @@ function Restaurant() {
                             }}
                           />
                         </Link>
-                        <p>Ranking Position: {restaurant.rankingPosition}</p>
+                        <p>Rating: {restaurant.Rating}</p>
                         <p>Address: {restaurant.address}</p>
                       </div>
                     </td>
@@ -67,7 +67,7 @@ function Restaurant() {
                       <td>
                         <div className="restaurant">
                           <h3>{currentRestaurants[index + 1].name}</h3>
-                          <Link to={`/recommend/${currentRestaurants[index + 1].id}`}>
+                          <Link to={`/restaurants/recommend?longitude=${currentRestaurants[index + 1].longitude}&latitude=${currentRestaurants[index + 1].latitude}`}>
                             <img
                               src={currentRestaurants[index + 1].image}
                               alt={currentRestaurants[index + 1].name}
@@ -78,7 +78,7 @@ function Restaurant() {
                               }}
                             />
                           </Link>
-                          <p>Ranking Position: {currentRestaurants[index + 1].rankingPosition}</p>
+                          <p>Rating: {currentRestaurants[index + 1].Rating}</p>
                           <p>Address: {currentRestaurants[index + 1].address}</p>
                         </div>
                       </td>
@@ -97,5 +97,3 @@ function Restaurant() {
     </div>
   );
 }
-
-export default Restaurant;
