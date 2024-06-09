@@ -159,7 +159,15 @@ function RecommendComponent() {
             {recommendedRestaurants.map((restaurant, index) => (
               <tr key={index}>
                 <td>{restaurant.name}</td>
-                <td><img src={restaurant.image} alt={restaurant.name} className="restaurant-image" /></td>
+                <img
+                            src={restaurant.image}
+                            alt={restaurant.name}
+                            style={{
+                              width: "200px",
+                              height: "150px",
+                              objectFit: "cover",
+                            }}
+                          />
                 <td>{restaurant.rankingPosition}</td>
                 <td>{restaurant.address}</td>
               </tr>
@@ -186,8 +194,17 @@ function RecommendComponent() {
               <tr key={index}>
                 <td>{mall.name}</td>
                 
-                <td>{mall.Ranking}</td>
+                
                 <td>{mall.address}</td>
+              <img
+                            src={mall.image}
+                            alt={mall.name}
+                            style={{
+                              width: "200px",
+                              height: "150px",
+                              objectFit: "cover",
+                            }}
+                          />
               </tr>
             ))}
           </tbody>
@@ -203,7 +220,7 @@ function RecommendComponent() {
             <tr>
               <th>Name</th>
               <th>Image</th>
-              <th>Ranking Position</th>
+              
               <th>Address</th>
             </tr>
           </thead>
@@ -212,7 +229,15 @@ function RecommendComponent() {
               <tr key={index}>
                 <td>{hotel.name}</td>
                 
-                <td>{hotel.image}</td>
+               <img
+                            src={hotel.image}
+                            alt={hotel.name}
+                            style={{
+                              width: "200px",
+                              height: "150px",
+                              objectFit: "cover",
+                            }}
+                          />
                 <td>{hotel.phone}</td>
               </tr>
             ))}
