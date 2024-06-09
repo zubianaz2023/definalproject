@@ -56,6 +56,7 @@ function RecommendComponent() {
       });
   }, []);
 
+ 
   useEffect(() => {
     // Fetch top_hotels data
     fetch(`${config.backendUrl}/get_top_hotels`)
