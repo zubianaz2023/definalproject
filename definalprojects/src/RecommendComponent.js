@@ -187,38 +187,47 @@ function RecommendComponent() {
 )}
 
 <h3>Recommended Hotels</h3>
-      {recommendedHotels.length > 0 ? (
-        <table className="recommend-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Image</th>
-              
-              <th>Phone</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recommendedHotels.map((hotel, index) => (
-              <tr key={index}>
-                <td>{hotel.name}</td>
-                
-               <img
-                            src={hotel.image}
-                            alt={hotel.name}
-                            style={{
-                              width: "200px",
-                              height: "150px",
-                              objectFit: "cover",
-                            }}
-                          />
-                <td>{hotel.phone}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-                    ) : (
-        <p>No recommended Hotels found.</p>
-      )}
+{recommendedHotels.length > 0 ? (
+  <table className="recommend-table">
+    <thead>
+      <tr>
+        {recommendedHotels.slice(0, 5).map((hotel, index) => (
+          <th key={index}>Hotel {index + 1}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {recommendedHotels.slice(0, 5).map((hotel, index) => (
+          <td key={index}>
+            <div className="recommend-item">
+              <div>
+                <strong>Name:</strong> {hotel.name}
+              </div>
+              <div>
+                <img
+                  src={hotel.image}
+                  alt={hotel.name}
+                  style={{
+                    width: "200px",
+                    height: "150px",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+              <div>
+                <strong>Phone:</strong> {hotel.phone}
+              </div>
+            </div>
+          </td>
+        ))}
+      </tr>
+    </tbody>
+  </table>
+) : (
+  <p>No recommended Hotels found.</p>
+)}
+
       <h3>Recommended Shopping Malls</h3>
       {recommendedMalls.length > 0 ? (
         <table className="recommend-table">
