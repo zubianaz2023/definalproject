@@ -151,7 +151,7 @@ function RecommendComponent() {
             <tr>
               <th>Name</th>
               <th>Image</th>
-              <th>Ranking Position</th>
+              
               <th>Address</th>
             </tr>
           </thead>
@@ -168,7 +168,7 @@ function RecommendComponent() {
                               objectFit: "cover",
                             }}
                           />
-                <td>{restaurant.rankingPosition}</td>
+               
                 <td>{restaurant.address}</td>
               </tr>
             ))}
