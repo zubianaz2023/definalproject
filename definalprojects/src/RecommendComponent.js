@@ -142,9 +142,7 @@ function RecommendComponent() {
 
   return (
     <div>
-      <h2>Recommend Component</h2>
-      <p>Longitude: {longitude}</p>
-      <p>Latitude: {latitude}</p>
+     
 
       <h3>Recommended Restaurants</h3>
       {recommendedRestaurants.length > 0 ? (
