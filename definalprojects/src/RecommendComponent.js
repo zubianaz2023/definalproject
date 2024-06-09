@@ -68,6 +68,7 @@ function RecommendComponent() {
       .then(data => {
         if (data.top_hotels) {
           setTopHotelsData(data.top_hotels);
+          print(data.top_hotels)
         } else {
           console.error('Error fetching top_hotels data:', data.error);
         }
