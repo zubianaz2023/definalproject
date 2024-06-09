@@ -9,7 +9,7 @@ function Places() {
   const restaurantsPerPage = 10;
 
   useEffect(() => {
-    fetch(`${config.backendUrl}/`)
+    fetch(`${config.backendUrl}/places`)
       .then(res => res.json())
       .then(data => {
         console.log("Data received:", data);
@@ -48,7 +48,7 @@ function Places() {
                     <td>
                       <div className="restaurant">
                         <h3>{restaurant.name}</h3>
-                        <Link to={`/recommend?longitude=${restaurant.longitude}&latitude=${restaurant.latitude}`}>
+                        <Link to={`/places/recommend?longitude=${restaurant.longitude}&latitude=${restaurant.latitude}`}>
                           <img
                             src={restaurant.image}
                             alt={restaurant.name}
