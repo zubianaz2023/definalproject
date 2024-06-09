@@ -16,7 +16,7 @@ function RecommendComponent() {
 
   useEffect(() => {
     // Fetch top_res data
-    fetch(`${config.backendUrl}/get_top_res`)
+    fetch(`${config.backendUrl}/places/get_top_res`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -37,7 +37,7 @@ function RecommendComponent() {
 
   useEffect(() => {
     // Fetch top_malls data
-    fetch(`${config.backendUrl}/get_top_malls`)
+    fetch(`${config.backendUrl}/places/get_top_malls`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -59,7 +59,7 @@ function RecommendComponent() {
  
   useEffect(() => {
     // Fetch top_hotels data
-    fetch(`${config.backendUrl}/get_top_hotels`)
+    fetch(`${config.backendUrl}/places/get_top_hotels`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -82,7 +82,7 @@ function RecommendComponent() {
   useEffect(() => {
     if (longitude && latitude) {
       // Fetch recommended restaurants
-      fetch(`${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}&category=restaurants`)
+      fetch(`${config.backendUrl}/places/recommend?longitude=${longitude}&latitude=${latitude}&category=restaurants`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -101,7 +101,7 @@ function RecommendComponent() {
         });
 
       // Fetch recommended malls
-      fetch(`${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}&category=malls`)
+      fetch(`${config.backendUrl}/places/recommend?longitude=${longitude}&latitude=${latitude}&category=malls`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -120,7 +120,7 @@ function RecommendComponent() {
         });
 
       // Fetch recommended hotels
-      fetch(`${config.backendUrl}/recommend?longitude=${longitude}&latitude=${latitude}&category=hotels`)
+      fetch(`${config.backendUrl}/places/recommend?longitude=${longitude}&latitude=${latitude}&category=hotels`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
