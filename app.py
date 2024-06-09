@@ -40,15 +40,15 @@ coords_malls = top_malls[['longitude', 'latitude']]
 coords_hotels = top_hotels [['longitude', 'latitude']]
 
 # Fit KMeans with k=3 for all datasets
-kmeans_res = KMeans(n_clusters=3, init='k-means++')
+kmeans_res = KMeans(n_clusters=5, init='k-means++')
 kmeans_res.fit(coords_res)
 top_res['cluster'] = kmeans_res.labels_
 
-kmeans_malls = KMeans(n_clusters=3, init='k-means++')
+kmeans_malls = KMeans(n_clusters=5, init='k-means++')
 kmeans_malls.fit(coords_malls)
 top_malls['cluster'] = kmeans_malls.labels_
 
-kmeans_hotels = KMeans(n_clusters=3, init='k-means++')
+kmeans_hotels = KMeans(n_clusters=5, init='k-means++')
 kmeans_hotels.fit(coords_hotels)
 top_hotels ['cluster'] = kmeans_hotels.labels_
 
