@@ -185,8 +185,8 @@ function RecommendComponent() {
             {recommendedMalls.map((mall, index) => (
               <tr key={index}>
                 <td>{mall.name}</td>
-                <td><img src={mall.image} alt={mall.name} className="mall-image" /></td>
-                <td>{mall.rankingPosition}</td>
+                
+                <td>{mall.Ranking}</td>
                 <td>{mall.address}</td>
               </tr>
             ))}
