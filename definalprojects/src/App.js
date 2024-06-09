@@ -28,7 +28,7 @@ function App() {
           <Route path="/hotels" element={<Hotels />} />
           <Route path="/restaurants" element={<Restaurant />} />
           <Route path="/shoppingmalls" element={<ShoppingMalls />} />
-          <Route path="/recommend" element={<RecommendComponent />} />
+          <Route path="/places/recommend" element={<RecommendComponent />} />
           
         </Routes>
       </div>
