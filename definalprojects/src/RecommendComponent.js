@@ -212,8 +212,8 @@ function RecommendComponent() {
               <tr key={index}>
                 <td>{hotel.name}</td>
                 
-                <td>{hotel.Ranking}</td>
-                <td>{hotel.address}</td>
+                <td>{hotel.image}</td>
+                <td>{hotel.phone}</td>
               </tr>
             ))}
           </tbody>
