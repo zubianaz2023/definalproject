@@ -19,7 +19,7 @@ function App() {
             <li><Link to="/hotels">Hotels</Link></li>
             <li><Link to="/restaurants">Restaurants</Link></li>
             <li><Link to="/shoppingmalls">Shopping Malls</Link></li>
-            <li><Link to="/recommend">Best Restaurants</Link></li>
+            <li><Link to="/places/recommend">Best Restaurants</Link></li>
           </ul>
         </nav>
         <Routes>
