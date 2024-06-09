@@ -174,7 +174,9 @@ function RecommendComponent() {
             ))}
           </tbody>
         </table>
-
+) : (
+        <p>No Restaurants found.</p>
+      )}
 <h3>Recommended Hotels</h3>
       {recommendedHotels.length > 0 ? (
         <table className="recommend-table">
@@ -206,7 +208,7 @@ function RecommendComponent() {
           </tbody>
         </table>
                     ) : (
-        <p>No recommended restaurants found.</p>
+        <p>No recommended Hotels found.</p>
       )}
       <h3>Recommended Shopping Malls</h3>
       {recommendedMalls.length > 0 ? (
