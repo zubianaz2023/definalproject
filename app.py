@@ -31,8 +31,8 @@ top_malls = filtered_df_malls.sort_values(by=['Ranking'], ascending=True)
 
 # Load hotels data
 df_hotels = pd.read_csv("Hotels.csv")
-filtered_df_hotels = df_hotels.dropna(subset=['Ranking', 'image', 'longitude', 'latitude'])
-top_hotels = filtered_df_hotels.sort_values(by=['Ranking'], ascending=True)
+filtered_df_hotels = df_hotels.dropna(subset=['image', 'longitude', 'latitude'])
+#top_hotels = filtered_df_hotels.sort_values(by=['Ranking'], ascending=True)
 
 # Extract coordinates for KMeans
 coords_res = top_res[['longitude', 'latitude']]
