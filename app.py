@@ -49,14 +49,30 @@ kmeans_hotels = KMeans(n_clusters=3, init='k-means++')
 kmeans_hotels.fit(coords_hotels)
 top_hotels['cluster'] = kmeans_hotels.labels_
 
-def recommend_places(data, kmeans, longitude, latitude, top_n=5):
-    cluster = kmeans.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = data[data['cluster'] == cluster].iloc[:top_n]
+def recommend_restaurants(top_res, longitude, latitude):
+    cluster = kmeans_res.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:5, [0, 2, 8, 9]]
+    return cluster_df
+
+def recommend_malls(top_malls, longitude, latitude):
+    cluster = kmeans_malls.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster_df = top_malls[top_malls['cluster'] == cluster].iloc[:5, [0, 1, 2, 3, 4]]
+    return cluster_df
+
+def recommend_hotels(top_hotels, longitude, latitude):
+    cluster = kmeans_hotels.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 2, 6, 7]]
     return cluster_df
 
 @app.route('/places')
 def get_clusters():
     clusters_data = top[['Name', 'Rating', 'address', 'image', 'longitude', 'latitude']]
+    clusters_list = clusters_data.to_dict(orient='records')
+    return jsonify({'clusters': clusters_list})
+
+@app.route('/restaurants')
+def get_restaurant_clusters():
+    clusters_data = top_res[['name', 'Rating', 'address', 'image', 'longitude', 'latitude']]
     clusters_list = clusters_data.to_dict(orient='records')
     return jsonify({'clusters': clusters_list})
 
@@ -86,35 +102,14 @@ def recommend():
 
     if longitude is not None and latitude is not None:
         if category == 'malls':
-            recommended_malls = recommend_places(top_malls, kmeans_malls, longitude, latitude)
+            recommended_malls = recommend_malls(top_malls, longitude, latitude)
             return jsonify({'recommended_malls': recommended_malls.to_dict(orient='records')})
         elif category == 'hotels':
-            recommended_hotels = recommend_places(top_hotels, kmeans_hotels, longitude, latitude)
+            recommended_hotels = recommend_hotels(top_hotels, longitude, latitude)
             return jsonify({'recommended_hotels': recommended_hotels.to_dict(orient='records')})
         else:
-            recommended_restaurants = recommend_places(top_res, kmeans_res, longitude, latitude)
+            recommended_restaurants = recommend_restaurants(top_res, longitude, latitude)
             return jsonify({'recommended_restaurants': recommended_restaurants.to_dict(orient='records')})
-    else:
-        return jsonify({'error': 'Invalid longitude or latitude value.'}), 400
-
-@app.route('/restaurants/recommend')
-def recommend_nearby():
-    longitude_str = request.args.get('longitude')
-    latitude_str = request.args.get('latitude')
-
-    longitude = convert_to_float(longitude_str)
-    latitude = convert_to_float(latitude_str)
-
-    if longitude is not None and latitude is not None:
-        recommended_malls = recommend_places(top_malls, kmeans_malls, longitude, latitude)
-        recommended_hotels = recommend_places(top_hotels, kmeans_hotels, longitude, latitude)
-        recommended_places = recommend_places(top, kmeans_res, longitude, latitude)
-        
-        return jsonify({
-            'recommended_malls': recommended_malls.to_dict(orient='records'),
-            'recommended_hotels': recommended_hotels.to_dict(orient='records'),
-            'recommended_places': recommended_places.to_dict(orient='records')
-        })
     else:
         return jsonify({'error': 'Invalid longitude or latitude value.'}), 400
 
