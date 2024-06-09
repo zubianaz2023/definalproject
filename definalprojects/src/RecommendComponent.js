@@ -144,39 +144,40 @@ function RecommendComponent() {
     <div>
      
 
-      <h3>Recommended Restaurants</h3>
-      {recommendedRestaurants.length > 0 ? (
-        <table className="recommend-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Image</th>
-              
-              <th>Address</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recommendedRestaurants.map((restaurant, index) => (
-              <tr key={index}>
-                <td>{restaurant.name}</td>
-                <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
-                            style={{
-                              width: "200px",
-                              height: "150px",
-                              objectFit: "cover",
-                            }}
-                          />
-               
-                <td>{restaurant.address}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+<h3>Recommended Restaurants</h3>
+{recommendedRestaurants.length > 0 ? (
+  <table className="recommend-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      {recommendedRestaurants.map((restaurant, index) => (
+        <tr key={index}>
+          <td>{restaurant.name}</td>
+          <td>
+            <img
+              src={restaurant.image}
+              alt={restaurant.name}
+              style={{
+                width: "200px",
+                height: "150px",
+                objectFit: "cover",
+              }}
+            />
+          </td>
+          <td>{restaurant.address}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 ) : (
-        <p>No Restaurants found.</p>
-      )}
+  <p>No Restaurants found.</p>
+)}
+
 <h3>Recommended Hotels</h3>
       {recommendedHotels.length > 0 ? (
         <table className="recommend-table">
