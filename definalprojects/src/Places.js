@@ -4,28 +4,28 @@ import config from './config';
 import './App.css';
 
 function Places() {
-  const [restaurants, setRestaurants] = useState([]);
+  const [places, setPlaces] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const restaurantsPerPage = 10;
+  const placesPerPage = 10;
 
   useEffect(() => {
     fetch(`${config.backendUrl}/places`)
       .then(res => res.json())
       .then(data => {
         console.log("Data received:", data);
-        setRestaurants(data.clusters);
+        setPlaces(data.clusters);
       })
       .catch(error => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
-  const indexOfLastRestaurant = currentPage * restaurantsPerPage;
-  const indexOfFirstRestaurant = indexOfLastRestaurant - restaurantsPerPage;
-  const currentRestaurants = restaurants.slice(indexOfFirstRestaurant, indexOfLastRestaurant);
+  const indexOfLastPlace = currentPage * placesPerPage;
+  const indexOfFirstPlace = indexOfLastPlace - placesPerPage;
+  const currentPlaces = places.slice(indexOfFirstPlace, indexOfLastPlace);
 
   const nextPage = () => {
-    if (currentPage < Math.ceil(restaurants.length / restaurantsPerPage)) {
+    if (currentPage < Math.ceil(places.length / placesPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -39,19 +39,19 @@ function Places() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="restaurants">
+        <div className="places">
           <table>
             <tbody>
-              {currentRestaurants.map((restaurant, index) => (
+              {currentPlaces.map((place, index) => (
                 index % 2 === 0 ? (
                   <tr key={index}>
                     <td>
-                      <div className="restaurant">
-                        <h3>{restaurant.name}</h3>
-                        <Link to={`/places/recommend?longitude=${restaurant.longitude}&latitude=${restaurant.latitude}`}>
+                      <div className="place">
+                        <h3>{place.name}</h3>
+                        <Link to={`/places/recommend?longitude=${place.longitude}&latitude=${place.latitude}`}>
                           <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
+                            src={place.image}
+                            alt={place.name}
                             style={{
                               width: "200px",
                               height: "150px",
@@ -59,18 +59,18 @@ function Places() {
                             }}
                           />
                         </Link>
-                        <p>Rating: {restaurant.Rating}</p>
-                        <p>Address: {restaurant.address}</p>
+                        <p>Rating: {place.Rating}</p>
+                        <p>Address: {place.address}</p>
                       </div>
                     </td>
-                    {currentRestaurants[index + 1] && (
+                    {currentPlaces[index + 1] && (
                       <td>
-                        <div className="restaurant">
-                          <h3>{currentRestaurants[index + 1].name}</h3>
-                          <Link to={`/places/recommend?longitude=${currentRestaurants[index + 1].longitude}&latitude=${currentRestaurants[index + 1].latitude}`}>
+                        <div className="place">
+                          <h3>{currentPlaces[index + 1].name}</h3>
+                          <Link to={`/places/recommend?longitude=${currentPlaces[index + 1].longitude}&latitude=${currentPlaces[index + 1].latitude}`}>
                             <img
-                              src={currentRestaurants[index + 1].image}
-                              alt={currentRestaurants[index + 1].name}
+                              src={currentPlaces[index + 1].image}
+                              alt={currentPlaces[index + 1].name}
                               style={{
                                 width: "200px",
                                 height: "150px",
@@ -78,8 +78,8 @@ function Places() {
                               }}
                             />
                           </Link>
-                          <p>Rating: {currentRestaurants[index + 1].Rating}</p>
-                          <p>Address: {currentRestaurants[index + 1].address}</p>
+                          <p>Rating: {currentPlaces[index + 1].Rating}</p>
+                          <p>Address: {currentPlaces[index + 1].address}</p>
                         </div>
                       </td>
                     )}
@@ -90,7 +90,7 @@ function Places() {
           </table>
           <div className="pagination">
             <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
-            <button onClick={nextPage} disabled={currentPage === Math.ceil(restaurants.length / restaurantsPerPage)}>Next</button>
+            <button onClick={nextPage} disabled={currentPage === Math.ceil(places.length / placesPerPage)}>Next</button>
           </div>
         </div>
       </header>
