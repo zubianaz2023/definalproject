@@ -21,13 +21,17 @@ top = df.sort_values(by=['Rating'], ascending=True)
 
 # Load restaurant data
 df_res = pd.read_csv("Restaurants.csv")
-filtered_df_res = df_res.dropna(subset=['rankingPosition', 'image','longitude','latitude'])
-top_res = filtered_df_res.sort_values(by=['rankingPosition'], ascending=True)
+top_res = df_res.dropna(subset=['rankingPosition', 'image','longitude','latitude'])
+#top_res = filtered_df_res.sort_values(by=['rankingPosition'], ascending=True)
+#top_res = df_res.sort_values(by=['rankingPosition'], ascending=True)
+
 
 # Load shopping malls data
 df_malls = pd.read_csv("ShoppingMalls.csv")
-filtered_df_malls = df_malls.dropna(subset=['Ranking', 'image', 'longitude', 'latitude','phone','website'])
-top_malls = filtered_df_malls.sort_values(by=['Ranking'], ascending=True)
+top_malls = df_malls.dropna(subset=['Ranking', 'image', 'longitude', 'latitude','phone','website'])
+#top_malls = filtered_df_malls.sort_values(by=['Ranking'], ascending=True)
+#top_malls = filtered_df_malls.sort_values(by=['Ranking'], ascending=True)
+
 
 # Load hotels data
 df_hotels = pd.read_csv("Hotels.csv")
