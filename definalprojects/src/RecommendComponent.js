@@ -227,41 +227,44 @@ function RecommendComponent() {
 ) : (
   <p>No recommended Hotels found.</p>
 )}
-
-      <h3>Recommended Shopping Malls</h3>
-      {recommendedMalls.length > 0 ? (
-        <table className="recommend-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Image</th>
-              
-              
-            </tr>
-          </thead>
-          <tbody>
-            {recommendedMalls.map((mall, index) => (
-              <tr key={index}>
-                <td>{mall.name}</td>
-                
-                
-                
-              <img
-                            src={mall.image}
-                            alt={mall.name}
-                            style={{
-                              width: "200px",
-                              height: "150px",
-                              objectFit: "cover",
-                            }}
-                          />
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No recommended shopping malls found.</p>
-      )}
+<h3>Recommended Shopping Malls</h3>
+{recommendedMalls.length > 0 ? (
+  <table className="recommend-table">
+    <thead>
+      <tr>
+        {recommendedMalls.slice(0, 5).map((mall, index) => (
+          <th key={index}>Mall {index + 1}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {recommendedMalls.slice(0, 5).map((mall, index) => (
+          <td key={index}>
+            <div className="recommend-item">
+              <div>
+                <strong>Name:</strong> {mall.name}
+              </div>
+              <div>
+                <img
+                  src={mall.image}
+                  alt={mall.name}
+                  style={{
+                    width: "200px",
+                    height: "150px",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            </div>
+          </td>
+        ))}
+      </tr>
+    </tbody>
+  </table>
+) : (
+  <p>No recommended shopping malls found.</p>
+)}
 
       
     
