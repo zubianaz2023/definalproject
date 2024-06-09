@@ -85,7 +85,7 @@ def get_top_malls():
 
 @app.route('/get_top_hotels')
 def get_top_hotels():
-    top_hotels_data = top_hotels[['name', 'image']].to_dict(orient='records')
+    top_hotels_data = top_hotels[['name', 'image','phone']].to_dict(orient='records')
     return jsonify({'top_hotels': top_hotels_data})
 
 @app.route('/recommend')
