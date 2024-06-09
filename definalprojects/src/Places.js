@@ -67,7 +67,7 @@ function Places() {
                       <td>
                         <div className="restaurant">
                           <h3>{currentRestaurants[index + 1].name}</h3>
-                          <Link to={`/recommend?longitude=${currentRestaurants[index + 1].longitude}&latitude=${currentRestaurants[index + 1].latitude}`}>
+                          <Link to={`/places/recommend?longitude=${currentRestaurants[index + 1].longitude}&latitude=${currentRestaurants[index + 1].latitude}`}>
                             <img
                               src={currentRestaurants[index + 1].image}
                               alt={currentRestaurants[index + 1].name}
