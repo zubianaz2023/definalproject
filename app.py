@@ -21,7 +21,7 @@ top = df.sort_values(by=['Rating'], ascending=True)
 
 # Load restaurant data
 df_res = pd.read_csv("Restaurant.csv")
-top_res = df_res.dropna(subset=['rankingPosition', 'image', 'longitude', 'latitude'])
+top_res = df_res.dropna(subset=['Ranking', 'image', 'longitude', 'latitude'])
 
 # Load shopping malls data
 df_malls = pd.read_csv("ShoppingMalls.csv")
@@ -84,7 +84,7 @@ def get_clusters():
 
 @app.route('/restaurants')
 def get_restaurant_clusters():
-    clusters_data = top_res[['name', 'rankingPosition', 'address', 'image', 'longitude', 'latitude']]
+    clusters_data = top_res[['name', 'Ranking', 'address', 'image', 'longitude', 'latitude']]
     clusters_list = clusters_data.to_dict(orient='records')
     return jsonify({'clusters': clusters_list})
 
