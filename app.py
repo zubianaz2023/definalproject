@@ -57,22 +57,22 @@ top['cluster'] = kmeans_places.labels_
 
 def recommend_places(longitude, latitude):
     cluster = kmeans_places.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top[top['cluster'] == cluster].iloc[:5, [0, 3, 6, 7, 8]]
+    cluster_df = top[top['cluster'] == cluster].iloc[:3, [0, 3, 6, 7, 8]]
     return cluster_df
 
 def recommend_restaurants(longitude, latitude):
     cluster = kmeans_res.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:5, [0, 2, 3, 4, 5, 7, 8]]
+    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:3, [0, 2, 3, 4, 5, 7, 8]]
     return cluster_df
 
 def recommend_malls(longitude, latitude):
     cluster = kmeans_malls.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top_malls[top_malls['cluster'] == cluster].iloc[:5, [0, 1, 2, 3, 4]]
+    cluster_df = top_malls[top_malls['cluster'] == cluster].iloc[:3, [0, 1, 2, 3, 4]]
     return cluster_df
 
 def recommend_hotels(longitude, latitude):
     cluster = kmeans_hotels.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 2, 6, 7]]
+    cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:3, [0, 1, 2, 6, 7]]
     return cluster_df
     
 @app.route('/places')
