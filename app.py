@@ -54,6 +54,7 @@ kmeans_places = KMeans(n_clusters=3, init='k-means++')
 kmeans_places.fit(coords_places)
 top['cluster'] = kmeans_places.labels_
 
+
 def recommend_places(longitude, latitude):
     cluster = kmeans_places.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     cluster_df = top[top['cluster'] == cluster].iloc[:5, [0, 1, 2, 4, 5, 6]]
@@ -73,7 +74,18 @@ def recommend_hotels(longitude, latitude):
     cluster = kmeans_hotels.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 2, 6, 7]]
     return cluster_df
+    
+@app.route('/places')
+def get_clusters():
+    clusters_data = top[['Name', 'Rating', 'image', 'longitude', 'latitude']]
+    clusters_list = clusters_data.to_dict(orient='records')
+    return jsonify({'clusters': clusters_list})
 
+@app.route('/restaurants')
+def get_restaurant_clusters():
+    clusters_data = top_res[['name', 'Ranking', 'address', 'image', 'longitude', 'latitude', 'phone']]
+    clusters_list = clusters_data.to_dict(orient='records')
+    return jsonify({'clusters': clusters_list})
 @app.route('/places/recommend')
 def recommend_places_endpoint():
     longitude_str = request.args.get('longitude')
