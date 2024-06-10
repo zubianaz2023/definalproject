@@ -24,17 +24,20 @@ function RecommendComponent() {
           return response.json();
         })
         .then(data => {
-          if (data.recommended_places) {
-            setRecommendedPlaces(data.recommended_places);
+          if (isRestaurantEndpoint) {
+            if (data.recommended_places) {
+              setRecommendedPlaces(data.recommended_places);
+            }
+          } else {
+            if (data.recommended_restaurants) {
+              setRecommendedRestaurants(data.recommended_restaurants);
+            }
           }
           if (data.recommended_malls) {
             setRecommendedMalls(data.recommended_malls);
           }
           if (data.recommended_hotels) {
             setRecommendedHotels(data.recommended_hotels);
-          }
-          if (data.recommended_restaurants) {
-            setRecommendedRestaurants(data.recommended_restaurants);
           }
         })
         .catch(error => {
@@ -47,7 +50,7 @@ function RecommendComponent() {
     <div>
       {recommendedRestaurants.length > 0 && (
         <>
-          <h3>Recommendations</h3>
+          <h3>Recommended Restaurants</h3>
           <table className="recommend-table">
             <tbody>
               <tr>
@@ -71,7 +74,7 @@ function RecommendComponent() {
                       <div>
                         <strong>Address:</strong> {restaurant.address}
                       </div>
-                          <div>
+                      <div>
                         <strong>Phone:</strong> {restaurant.phone}
                       </div>
                     </div>
@@ -118,75 +121,72 @@ function RecommendComponent() {
         </>
       )}
 
-      
-{recommendedHotels.length > 0 && (
-  <>
-    <h3>Recommended Hotels</h3>
-    <table className="recommend-table">
-      <tbody>
-        <tr>
-          {recommendedHotels.slice(0, 5).map((hotel, index) => (
-            <td key={index}>
-              <div className="recommend-item">
-                <div>
-                  <strong>Name:</strong> {hotel.name}
-                </div>
-                <div>
-                  <img
-                    src={hotel.image}
-                    alt={hotel.name}
-                    style={{
-                      width: "200px",
-                      height: "150px",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-                <div>
-                  <strong>Phone:</strong> {hotel.phone}
-                </div>
-              </div>
-            </td>
-          ))}
-        </tr>
-      </tbody>
-    </table>
-  </>
-)}
+      {recommendedHotels.length > 0 && (
+        <>
+          <h3>Recommended Hotels</h3>
+          <table className="recommend-table">
+            <tbody>
+              <tr>
+                {recommendedHotels.slice(0, 5).map((hotel, index) => (
+                  <td key={index}>
+                    <div className="recommend-item">
+                      <div>
+                        <strong>Name:</strong> {hotel.name}
+                      </div>
+                      <div>
+                        <img
+                          src={hotel.image}
+                          alt={hotel.name}
+                          style={{
+                            width: "200px",
+                            height: "150px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <strong>Phone:</strong> {hotel.phone}
+                      </div>
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </>
+      )}
 
-  {recommendedMalls.length > 0 && (
-  <>
-    <h3>Recommended Shopping Malls</h3>
-    <table className="recommend-table">
-      <tbody>
-        <tr>
-          {recommendedMalls.slice(0, 5).map((mall, index) => (
-            <td key={index}>
-              <div className="recommend-item">
-                <div>
-                  <strong>Name:</strong> {mall.name}
-                </div>
-                <div>
-                  <img
-                    src={mall.image}
-                    alt={mall.name}
-                    style={{
-                      width: "200px",
-                      height: "150px",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-              </div>
-            </td>
-          ))}
-        </tr>
-      </tbody>
-    </table>
-  </>
-)}
-
-
+      {recommendedMalls.length > 0 && (
+        <>
+          <h3>Recommended Shopping Malls</h3>
+          <table className="recommend-table">
+            <tbody>
+              <tr>
+                {recommendedMalls.slice(0, 5).map((mall, index) => (
+                  <td key={index}>
+                    <div className="recommend-item">
+                      <div>
+                        <strong>Name:</strong> {mall.name}
+                      </div>
+                      <div>
+                        <img
+                          src={mall.image}
+                          alt={mall.name}
+                          style={{
+                            width: "200px",
+                            height: "150px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </>
+      )}
     </div>
   );
 }
