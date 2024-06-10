@@ -1,7 +1,8 @@
 import React from 'react';
 import { HashRouter, Route, Routes, Link } from 'react-router-dom';
 
-import RecommendComponent from './RecommendComponent';
+import RecommendPlacesComponent from './RecommendPlacesComponent';
+import RecommendRestaurantsComponent from './RecommendRestaurantsComponent';
 import Restaurant from './Restaurant';
 import Places from './Places';
 import Hotels from './Hotels';
