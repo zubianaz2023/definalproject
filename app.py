@@ -21,7 +21,7 @@ top = df.sort_values(by=['Rating'], ascending=True)
 
 # Load restaurant data
 df_res = pd.read_csv("Restaurant.csv")
-top_res = df_res.dropna(subset=['Ranking', 'image', 'longitude', 'latitude'])
+top_res = df_res.dropna(subset=['Ranking', 'image', 'longitude', 'latitude','phone'])
 
 # Load shopping malls data
 df_malls = pd.read_csv("ShoppingMalls.csv")
