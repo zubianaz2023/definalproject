@@ -84,7 +84,7 @@ def get_clusters():
 
 @app.route('/restaurants')
 def get_restaurant_clusters():
-    clusters_data = top_res[['name', 'Ranking', 'address', 'image', 'longitude', 'latitude']]
+    clusters_data = top_res[['name', 'Ranking', 'address', 'image', 'longitude', 'latitude','phone']]
     clusters_list = clusters_data.to_dict(orient='records')
     return jsonify({'clusters': clusters_list})
 
