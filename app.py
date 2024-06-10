@@ -57,7 +57,7 @@ top['cluster'] = kmeans_places.labels_
 
 def recommend_places(longitude, latitude):
     cluster = kmeans_places.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top[top['cluster'] == cluster].iloc[:5, [0, 1, 2, 4, 5, 6]]
+    cluster_df = top[top['cluster'] == cluster].iloc[:5, [0, 3, 6, 7, 8]]
     return cluster_df
 
 def recommend_restaurants(longitude, latitude):
