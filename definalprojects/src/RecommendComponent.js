@@ -26,10 +26,10 @@ function RecommendComponent() {
             return response.json();
           })
           .then(data => {
-            if (data.recommended_places) {
-              setRecommendedPlaces(data.recommended_places);
+            if (data.recommended_restaurants) {
+              setRecommendedRestaurants(data.recommended_restaurants);
             } else {
-              console.error('Error fetching recommended places:', data.error);
+              console.error('Error fetching recommended restaurants:', data.error);
             }
             if (data.recommended_malls) {
               setRecommendedMalls(data.recommended_malls);
@@ -55,10 +55,10 @@ function RecommendComponent() {
             return response.json();
           })
           .then(data => {
-            if (data.recommended_restaurants) {
-              setRecommendedRestaurants(data.recommended_restaurants);
+            if (data.recommended_places) {
+              setRecommendedPlaces(data.recommended_places);
             } else {
-              console.error('Error fetching recommended restaurants:', data.error);
+              console.error('Error fetching recommended places:', data.error);
             }
             if (data.recommended_malls) {
               setRecommendedMalls(data.recommended_malls);
@@ -226,7 +226,7 @@ function RecommendComponent() {
           </thead>
           <tbody>
             <tr>
-              {recommendedMalls.slice(0, 5).map((mall, index) => (
+                {recommendedMalls.slice(0, 5).map((mall, index) => (
                 <td key={index}>
                   <div className="recommend-item">
                     <div>
@@ -257,3 +257,4 @@ function RecommendComponent() {
 }
 
 export default RecommendComponent;
+
