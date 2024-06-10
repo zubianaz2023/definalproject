@@ -49,7 +49,7 @@ function RecommendRestaurantsComponent() {
                   <td key={index}>
                     <div className="recommend-item">
                       <div>
-                        <strong>Name:</strong> {place.name}
+                        <strong>Name:</strong> {place.Name}
                       </div>
                       <div>
                         <img
@@ -63,7 +63,7 @@ function RecommendRestaurantsComponent() {
                         />
                       </div>
                       <div>
-                        <strong>Address:</strong> {place.address}
+                        <strong>Address:</strong> {place.Location}
                       </div>
                     </div>
                   </td>
