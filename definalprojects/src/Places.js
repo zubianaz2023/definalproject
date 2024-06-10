@@ -59,7 +59,7 @@ function Places() {
                             }}
                           />
                         </Link>
-                        <p>Rating: {place.Rating}</p>
+                        
                         <p>Address: {place.address}</p>
                       </div>
                     </td>
