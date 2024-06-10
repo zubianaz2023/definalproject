@@ -47,7 +47,7 @@ function RecommendComponent() {
     <div>
       {recommendedRestaurants.length > 0 && (
         <>
-          <h3>Recommended Restaurants</h3>
+          <h3>Recommendations</h3>
           <table className="recommend-table">
             <tbody>
               <tr>
