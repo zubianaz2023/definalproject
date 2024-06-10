@@ -78,7 +78,7 @@ def recommend_places(longitude, latitude):
 
 @app.route('/places')
 def get_clusters():
-    clusters_data = top[['Name', 'Rating','image url', 'longitude', 'latitude']]
+    clusters_data = top[['Name', 'Rating','image', 'longitude', 'latitude']]
     clusters_list = clusters_data.to_dict(orient='records')
     return jsonify({'clusters': clusters_list})
 
