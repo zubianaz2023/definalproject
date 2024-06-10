@@ -32,16 +32,12 @@ df_hotels = pd.read_csv("Hotels.csv")
 top_hotels = df_hotels.dropna(subset=['image', 'longitude', 'latitude'])
 
 # Extract coordinates for KMeans
-coords_places = top[['longitude', 'latitude']]
 coords_res = top_res[['longitude', 'latitude']]
 coords_malls = top_malls[['longitude', 'latitude']]
 coords_hotels = top_hotels[['longitude', 'latitude']]
+coords_places = top[['longitude', 'latitude']]
 
 # Fit KMeans with k=3 for all datasets
-kmeans_places = KMeans(n_clusters=3, init='k-means++')
-kmeans_places.fit(coords_places)
-top['cluster'] = kmeans_places.labels_
-
 kmeans_res = KMeans(n_clusters=8, init='k-means++')
 kmeans_res.fit(coords_res)
 top_res['cluster'] = kmeans_res.labels_
@@ -54,14 +50,18 @@ kmeans_hotels = KMeans(n_clusters=3, init='k-means++')
 kmeans_hotels.fit(coords_hotels)
 top_hotels['cluster'] = kmeans_hotels.labels_
 
+kmeans_places = KMeans(n_clusters=3, init='k-means++')
+kmeans_places.fit(coords_places)
+top['cluster'] = kmeans_places.labels_
+
 def recommend_places(longitude, latitude):
     cluster = kmeans_places.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top[top['cluster'] == cluster].iloc[:5, [0, 2, 3, 4, 5]]
+    cluster_df = top[top['cluster'] == cluster].iloc[:5, [0, 1, 2, 4, 5, 6]]
     return cluster_df
 
 def recommend_restaurants(longitude, latitude):
     cluster = kmeans_res.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:5, [0, 2, 8, 9]]
+    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:5, [0, 2, 3, 4, 5, 7, 8]]
     return cluster_df
 
 def recommend_malls(longitude, latitude):
@@ -73,33 +73,6 @@ def recommend_hotels(longitude, latitude):
     cluster = kmeans_hotels.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 2, 6, 7]]
     return cluster_df
-
-@app.route('/places')
-def get_clusters():
-    clusters_data = top[['Name', 'Rating', 'image', 'longitude', 'latitude']]
-    clusters_list = clusters_data.to_dict(orient='records')
-    return jsonify({'clusters': clusters_list})
-
-@app.route('/restaurants')
-def get_restaurant_clusters():
-    clusters_data = top_res[['name', 'Ranking', 'address', 'image', 'longitude', 'latitude', 'phone']]
-    clusters_list = clusters_data.to_dict(orient='records')
-    return jsonify({'clusters': clusters_list})
-
-@app.route('/places/get_top_res')
-def get_top_res():
-    top_res_data = top_res[['name', 'address', 'image', 'phone']].to_dict(orient='records')
-    return jsonify({'top_res': top_res_data})
-
-@app.route('/places/get_top_malls')
-def get_top_malls():
-    top_malls_data = top_malls[['name', 'address', 'image', 'phone']].to_dict(orient='records')
-    return jsonify({'top_malls': top_malls_data})
-
-@app.route('/places/get_top_hotels')
-def get_top_hotels():
-    top_hotels_data = top_hotels[['name', 'image', 'phone']].to_dict(orient='records')
-    return jsonify({'top_hotels': top_hotels_data})
 
 @app.route('/places/recommend')
 def recommend_places_endpoint():
