@@ -20,7 +20,7 @@ print("Sort by ranking position...")
 top = df.sort_values(by=['Rating'], ascending=True)
 
 # Load restaurant data
-df_res = pd.read_csv("Restaurants.csv")
+df_res = pd.read_csv("Restaurant.csv")
 top_res = df_res.dropna(subset=['rankingPosition', 'image', 'longitude', 'latitude'])
 
 # Load shopping malls data
