@@ -65,9 +65,16 @@ def recommend_hotels(longitude, latitude):
     return cluster_df
 
 def recommend_places(longitude, latitude):
-    cluster = kmeans_res.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
-    cluster_df = top[top['cluster'] == cluster].iloc[:5, [0, 2, 3, 4, 5]]
-    return cluster_df
+    cluster_res = kmeans_res.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster_malls = kmeans_malls.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster_hotels = kmeans_hotels.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    
+    recommended_res = top_res[top_res['cluster'] == cluster_res].iloc[:5, [0, 2, 3, 4, 5]]
+    recommended_malls = top_malls[top_malls['cluster'] == cluster_malls].iloc[:5, [0, 1, 2, 3, 4]]
+    recommended_hotels = top_hotels[top_hotels['cluster'] == cluster_hotels].iloc[:5, [0, 1, 2, 6, 7]]
+    
+    return recommended_res, recommended_malls, recommended_hotels
+
 
 @app.route('/places')
 def get_clusters():
