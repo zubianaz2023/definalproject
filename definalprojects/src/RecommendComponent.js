@@ -24,14 +24,11 @@ function RecommendComponent() {
           return response.json();
         })
         .then(data => {
-          if (isRestaurantEndpoint) {
-            if (data.recommended_places) {
-              setRecommendedPlaces(data.recommended_places);
-            }
-          } else {
-            if (data.recommended_restaurants) {
-              setRecommendedRestaurants(data.recommended_restaurants);
-            }
+          if (data.recommended_places) {
+            setRecommendedPlaces(data.recommended_places);
+          }
+          if (data.recommended_restaurants) {
+            setRecommendedRestaurants(data.recommended_restaurants);
           }
           if (data.recommended_malls) {
             setRecommendedMalls(data.recommended_malls);
@@ -48,6 +45,41 @@ function RecommendComponent() {
 
   return (
     <div>
+      {recommendedPlaces.length > 0 && (
+        <>
+          <h3>Recommended Places</h3>
+          <table className="recommend-table">
+            <tbody>
+              <tr>
+                {recommendedPlaces.slice(0, 5).map((place, index) => (
+                  <td key={index}>
+                    <div className="recommend-item">
+                      <div>
+                        <strong>Name:</strong> {place.name}
+                      </div>
+                      <div>
+                        <img
+                          src={place.image}
+                          alt={place.name}
+                          style={{
+                            width: "200px",
+                            height: "150px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <strong>Address:</strong> {place.address}
+                      </div>
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </>
+      )}
+
       {recommendedRestaurants.length > 0 && (
         <>
           <h3>Recommended Restaurants</h3>
@@ -76,41 +108,6 @@ function RecommendComponent() {
                       </div>
                       <div>
                         <strong>Phone:</strong> {restaurant.phone}
-                      </div>
-                    </div>
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        </>
-      )}
-
-      {recommendedPlaces.length > 0 && (
-        <>
-          <h3>Recommended Places</h3>
-          <table className="recommend-table">
-            <tbody>
-              <tr>
-                {recommendedPlaces.slice(0, 5).map((place, index) => (
-                  <td key={index}>
-                    <div className="recommend-item">
-                      <div>
-                        <strong>Name:</strong> {place.name}
-                      </div>
-                      <div>
-                        <img
-                          src={place.image}
-                          alt={place.name}
-                          style={{
-                            width: "200px",
-                            height: "150px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <strong>Address:</strong> {place.address}
                       </div>
                     </div>
                   </td>
