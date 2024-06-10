@@ -46,11 +46,11 @@ kmeans_malls = KMeans(n_clusters=3, init='k-means++')
 kmeans_malls.fit(coords_malls)
 top_malls['cluster'] = kmeans_malls.labels_
 
-kmeans_hotels = KMeans(n_clusters=3, init='k-means++')
+kmeans_hotels = KMeans(n_clusters=8, init='k-means++')
 kmeans_hotels.fit(coords_hotels)
 top_hotels['cluster'] = kmeans_hotels.labels_
 
-kmeans_places = KMeans(n_clusters=3, init='k-means++')
+kmeans_places = KMeans(n_clusters=8, init='k-means++')
 kmeans_places.fit(coords_places)
 top['cluster'] = kmeans_places.labels_
 
