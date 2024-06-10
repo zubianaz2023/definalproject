@@ -24,17 +24,26 @@ function RecommendComponent() {
           return response.json();
         })
         .then(data => {
-          if (data.recommended_places) {
-            setRecommendedPlaces(data.recommended_places);
-          }
-          if (data.recommended_restaurants) {
-            setRecommendedRestaurants(data.recommended_restaurants);
-          }
-          if (data.recommended_malls) {
-            setRecommendedMalls(data.recommended_malls);
-          }
-          if (data.recommended_hotels) {
-            setRecommendedHotels(data.recommended_hotels);
+          if (isRestaurantEndpoint) {
+            if (data.recommended_places) {
+              setRecommendedPlaces(data.recommended_places);
+            }
+            if (data.recommended_malls) {
+              setRecommendedMalls(data.recommended_malls);
+            }
+            if (data.recommended_hotels) {
+              setRecommendedHotels(data.recommended_hotels);
+            }
+          } else {
+            if (data.recommended_restaurants) {
+              setRecommendedRestaurants(data.recommended_restaurants);
+            }
+            if (data.recommended_malls) {
+              setRecommendedMalls(data.recommended_malls);
+            }
+            if (data.recommended_hotels) {
+              setRecommendedHotels(data.recommended_hotels);
+            }
           }
         })
         .catch(error => {
