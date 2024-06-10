@@ -28,8 +28,8 @@ function App() {
           <Route path="/hotels" element={<Hotels />} />
           <Route path="/restaurants" element={<Restaurant />} />
           <Route path="/shoppingmalls" element={<ShoppingMalls />} />
-          <Route path="/places/recommend" element={<RecommendComponent />} />
-          <Route path="/restaurants/recommend" element={<RecommendComponent />} />
+          <Route path="/places/recommend" element={<RecommendPlacesComponent />} />
+          <Route path="/restaurants/recommend" element={<RecommendRestaurantsComponent />} />
           
         </Routes>
       </div>
