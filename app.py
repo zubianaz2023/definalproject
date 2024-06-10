@@ -64,6 +64,11 @@ def recommend_hotels(longitude, latitude):
     cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:5, [0, 1, 2, 6, 7]]
     return cluster_df
 
+def recommend_places(longitude, latitude):
+    cluster = kmeans_res.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster_df = top[top['cluster'] == cluster].iloc[:5, [0, 2, 3, 4, 5]]
+    return cluster_df
+
 @app.route('/places')
 def get_clusters():
     clusters_data = top[['Name', 'Rating', 'address', 'image', 'longitude', 'latitude']]
@@ -92,7 +97,7 @@ def get_top_hotels():
     return jsonify({'top_hotels': top_hotels_data})
 
 @app.route('/places/recommend')
-def recommend_places():
+def recommend_places_endpoint():
     longitude_str = request.args.get('longitude')
     latitude_str = request.args.get('latitude')
 
@@ -121,9 +126,7 @@ def recommend_restaurants_endpoint():
     latitude = convert_to_float(latitude_str)
 
     if longitude is not None and latitude is not None:
-        recommended_places = recommend_restaurants(longitude, latitude)
-        recommended_malls = recommend_malls(longitude, latitude)
-        recommended_hotels = recommend_hotels(longitude, latitude)
+        recommended_places, recommended_malls, recommended_hotels = recommend_places(longitude, latitude)
         
         return jsonify({
             'recommended_places': recommended_places.to_dict(orient='records'),
