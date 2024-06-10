@@ -71,6 +71,9 @@ function RecommendComponent() {
                       <div>
                         <strong>Address:</strong> {restaurant.address}
                       </div>
+                          <div>
+                        <strong>Phone:</strong> {restaurant.phone}
+                      </div>
                     </div>
                   </td>
                 ))}
