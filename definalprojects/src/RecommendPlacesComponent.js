@@ -10,6 +10,7 @@ function RecommendPlacesComponent() {
   const [recommendedRestaurants, setRecommendedRestaurants] = useState([]);
   const [recommendedMalls, setRecommendedMalls] = useState([]);
   const [recommendedHotels, setRecommendedHotels] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (longitude && latitude) {
@@ -33,9 +34,14 @@ function RecommendPlacesComponent() {
         })
         .catch(error => {
           console.error('Error fetching data:', error);
+          setError('Failed to fetch recommendations. Please try again later.');
         });
     }
   }, [longitude, latitude]);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div>
@@ -56,9 +62,9 @@ function RecommendPlacesComponent() {
                           src={restaurant.image}
                           alt={restaurant.name}
                           style={{
-                            width: "200px",
-                            height: "150px",
-                            objectFit: "cover",
+                            width: '200px',
+                            height: '150px',
+                            objectFit: 'cover',
                           }}
                         />
                       </div>
@@ -94,9 +100,9 @@ function RecommendPlacesComponent() {
                           src={hotel.image}
                           alt={hotel.name}
                           style={{
-                            width: "200px",
-                            height: "150px",
-                            objectFit: "cover",
+                            width: '200px',
+                            height: '150px',
+                            objectFit: 'cover',
                           }}
                         />
                       </div>
@@ -129,9 +135,9 @@ function RecommendPlacesComponent() {
                           src={mall.image}
                           alt={mall.name}
                           style={{
-                            width: "200px",
-                            height: "150px",
-                            objectFit: "cover",
+                            width: '200px',
+                            height: '150px',
+                            objectFit: 'cover',
                           }}
                         />
                       </div>
