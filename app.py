@@ -45,41 +45,41 @@ coords_malls_scaled = scaler.fit_transform(coords_malls)
 coords_hotels_scaled = scaler.fit_transform(coords_hotels)
 coords_places_scaled = scaler.fit_transform(coords_places)
 
-# Perform Agglomerative Clustering with a fixed number of clusters
-agg_res = AgglomerativeClustering(n_clusters=8)
+# Perform Agglomerative Clustering
+agg_res = AgglomerativeClustering(n_clusters=3)
 top_res['cluster'] = agg_res.fit_predict(coords_res_scaled)
 
 agg_malls = AgglomerativeClustering(n_clusters=3)
 top_malls['cluster'] = agg_malls.fit_predict(coords_malls_scaled)
 
-agg_hotels = AgglomerativeClustering(n_clusters=8)
+agg_hotels = AgglomerativeClustering(n_clusters=3)
 top_hotels['cluster'] = agg_hotels.fit_predict(coords_hotels_scaled)
 
-agg_places = AgglomerativeClustering(n_clusters=8)
+agg_places = AgglomerativeClustering(n_clusters=3)
 top['cluster'] = agg_places.fit_predict(coords_places_scaled)
 
 def recommend_places(longitude, latitude):
     standardized_coords = scaler.transform(np.array([[longitude, latitude]]))
-    cluster = agg_places.fit_predict(standardized_coords)[0]
-    cluster_df = top[top['cluster'] == cluster].iloc[:3, [0, 3, 6, 7, 8]]
+    cluster = agg_places.fit_predict(standardized_coords)
+    cluster_df = top[top['cluster'] == cluster[0]].iloc[:3, [0, 3, 6, 7, 8]]
     return cluster_df
 
 def recommend_restaurants(longitude, latitude):
     standardized_coords = scaler.transform(np.array([[longitude, latitude]]))
-    cluster = agg_res.fit_predict(standardized_coords)[0]
-    cluster_df = top_res[top_res['cluster'] == cluster].iloc[:3, [0, 2, 3, 4, 5, 7, 8]]
+    cluster = agg_res.fit_predict(standardized_coords)
+    cluster_df = top_res[top_res['cluster'] == cluster[0]].iloc[:3, [0, 2, 3, 4, 5, 7, 8]]
     return cluster_df
 
 def recommend_malls(longitude, latitude):
     standardized_coords = scaler.transform(np.array([[longitude, latitude]]))
-    cluster = agg_malls.fit_predict(standardized_coords)[0]
-    cluster_df = top_malls[top_malls['cluster'] == cluster].iloc[:3, [0, 1, 2, 3, 4]]
+    cluster = agg_malls.fit_predict(standardized_coords)
+    cluster_df = top_malls[top_malls['cluster'] == cluster[0]].iloc[:3, [0, 1, 2, 3, 4]]
     return cluster_df
 
 def recommend_hotels(longitude, latitude):
     standardized_coords = scaler.transform(np.array([[longitude, latitude]]))
-    cluster = agg_hotels.fit_predict(standardized_coords)[0]
-    cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:3, [0, 1, 2, 6, 7]]
+    cluster = agg_hotels.fit_predict(standardized_coords)
+    cluster_df = top_hotels[top_hotels['cluster'] == cluster[0]].iloc[:3, [0, 1, 2, 6, 7]]
     return cluster_df
 
 @app.route('/places')
@@ -103,11 +103,13 @@ def recommend_places_endpoint():
     latitude = convert_to_float(latitude_str)
 
     if longitude is not None and latitude is not None:
+        recommended_places = recommend_places(longitude, latitude)
         recommended_restaurants = recommend_restaurants(longitude, latitude)
         recommended_malls = recommend_malls(longitude, latitude)
         recommended_hotels = recommend_hotels(longitude, latitude)
         
         return jsonify({
+            'recommended_places': recommended_places.to_dict(orient='records'),
             'recommended_restaurants': recommended_restaurants.to_dict(orient='records'),
             'recommended_malls': recommended_malls.to_dict(orient='records'),
             'recommended_hotels': recommended_hotels.to_dict(orient='records')
@@ -124,12 +126,12 @@ def recommend_restaurants_endpoint():
     latitude = convert_to_float(latitude_str)
 
     if longitude is not None and latitude is not None:
-        recommended_places = recommend_places(longitude, latitude)
+        recommended_restaurants = recommend_restaurants(longitude, latitude)
         recommended_malls = recommend_malls(longitude, latitude)
         recommended_hotels = recommend_hotels(longitude, latitude)
         
         return jsonify({
-            'recommended_places': recommended_places.to_dict(orient='records'),
+            'recommended_restaurants': recommended_restaurants.to_dict(orient='records'),
             'recommended_malls': recommended_malls.to_dict(orient='records'),
             'recommended_hotels': recommended_hotels.to_dict(orient='records')
         })
