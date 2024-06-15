@@ -78,7 +78,7 @@ function Restaurant() {
                               }}
                             />
                           </Link>
-                          <p>Rating: {currentRestaurants[index + 1].Rating}</p>
+                          <p>Rating: {currentRestaurants[index + 1].Ranking}</p>
                           <p>Address: {currentRestaurants[index + 1].address}</p>
                         </div>
                       </td>
