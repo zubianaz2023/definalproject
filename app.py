@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 import pandas as pd
-from sklearn.cluster import KMeans
+from sklearn.cluster import AgglomerativeClustering
 import numpy as np
 from flask_cors import CORS
 
@@ -31,47 +31,42 @@ top_malls = df_malls.dropna(subset=['Ranking', 'image', 'longitude', 'latitude',
 df_hotels = pd.read_csv("Hotels.csv")
 top_hotels = df_hotels.dropna(subset=['image', 'longitude', 'latitude'])
 
-# Extract coordinates for KMeans
+# Extract coordinates for Agglomerative Clustering
 coords_res = top_res[['longitude', 'latitude']]
 coords_malls = top_malls[['longitude', 'latitude']]
 coords_hotels = top_hotels[['longitude', 'latitude']]
 coords_places = top[['longitude', 'latitude']]
 
-# Fit KMeans with k=3 for all datasets
-kmeans_res = KMeans(n_clusters=8, init='k-means++')
-kmeans_res.fit(coords_res)
-top_res['cluster'] = kmeans_res.labels_
+# Fit Agglomerative Clustering with k=3 for all datasets
+agglom_res = AgglomerativeClustering(n_clusters=3)
+top_res['cluster'] = agglom_res.fit_predict(coords_res)
 
-kmeans_malls = KMeans(n_clusters=3, init='k-means++')
-kmeans_malls.fit(coords_malls)
-top_malls['cluster'] = kmeans_malls.labels_
+agglom_malls = AgglomerativeClustering(n_clusters=3)
+top_malls['cluster'] = agglom_malls.fit_predict(coords_malls)
 
-kmeans_hotels = KMeans(n_clusters=8, init='k-means++')
-kmeans_hotels.fit(coords_hotels)
-top_hotels['cluster'] = kmeans_hotels.labels_
+agglom_hotels = AgglomerativeClustering(n_clusters=3)
+top_hotels['cluster'] = agglom_hotels.fit_predict(coords_hotels)
 
-kmeans_places = KMeans(n_clusters=8, init='k-means++')
-kmeans_places.fit(coords_places)
-top['cluster'] = kmeans_places.labels_
-
+agglom_places = AgglomerativeClustering(n_clusters=3)
+top['cluster'] = agglom_places.fit_predict(coords_places)
 
 def recommend_places(longitude, latitude):
-    cluster = kmeans_places.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster = agglom_places.fit_predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     cluster_df = top[top['cluster'] == cluster].iloc[:3, [0, 3, 6, 7, 8]]
     return cluster_df
 
 def recommend_restaurants(longitude, latitude):
-    cluster = kmeans_res.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster = agglom_res.fit_predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     cluster_df = top_res[top_res['cluster'] == cluster].iloc[:3, [0, 2, 3, 4, 5, 7, 8]]
     return cluster_df
 
 def recommend_malls(longitude, latitude):
-    cluster = kmeans_malls.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster = agglom_malls.fit_predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     cluster_df = top_malls[top_malls['cluster'] == cluster].iloc[:3, [0, 1, 2, 3, 4]]
     return cluster_df
 
 def recommend_hotels(longitude, latitude):
-    cluster = kmeans_hotels.predict(np.array([longitude, latitude]).reshape(1, -1))[0]
+    cluster = agglom_hotels.fit_predict(np.array([longitude, latitude]).reshape(1, -1))[0]
     cluster_df = top_hotels[top_hotels['cluster'] == cluster].iloc[:3, [0, 1, 2, 6, 7]]
     return cluster_df
     
@@ -86,6 +81,7 @@ def get_restaurant_clusters():
     clusters_data = top_res[['name', 'Ranking', 'address', 'image', 'longitude', 'latitude', 'phone']]
     clusters_list = clusters_data.to_dict(orient='records')
     return jsonify({'clusters': clusters_list})
+
 @app.route('/places/recommend')
 def recommend_places_endpoint():
     longitude_str = request.args.get('longitude')
@@ -137,4 +133,4 @@ def internal_server_error(e):
     return jsonify({'error': 'Internal Server Error'}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=True)
