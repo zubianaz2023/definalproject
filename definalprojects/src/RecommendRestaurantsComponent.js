@@ -54,7 +54,7 @@ function RecommendRestaurantsComponent() {
                       <div>
                         <img
                           src={place.image}
-                          alt={place.name}
+                          alt={place.Name}
                           style={{
                             width: "200px",
                             height: "150px",
@@ -63,7 +63,7 @@ function RecommendRestaurantsComponent() {
                         />
                       </div>
                       <div>
-                        <strong>Address:</strong> {place.Location}
+                        <strong>Location:</strong> {place.Location}
                       </div>
                     </div>
                   </td>
