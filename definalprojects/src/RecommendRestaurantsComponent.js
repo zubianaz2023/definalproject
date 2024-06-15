@@ -13,7 +13,8 @@ function RecommendRestaurantsComponent() {
 
   useEffect(() => {
     if (longitude && latitude) {
-      fetch(`${config.backendUrl}/restaurants/recommend?longitude=${longitude}&latitude=${latitude}`)
+      fetch('${config.backendUrl}/restaurants/recommend?longitude=${longitude}&latitude=${latitude}')
+
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
